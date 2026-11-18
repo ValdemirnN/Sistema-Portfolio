@@ -21,31 +21,31 @@ interface SolutionsAndQuoteSectionProps {
 const SOLUTION_MODELS = [
   {
     id: 'pronta' as const,
-    audience: 'Para empresas que buscam implantação rápida',
+    audience: 'Implantação acelerada',
     title: 'Solução Pronta Adaptada',
     summary:
-      'Implante um dos módulos validados (Faturamento Automático, Gestão de Serviços ou Centralizador SQL) configurado com sua identidade e regras básicas.',
+      'Implante um dos módulos validados (Faturamento Automático, Gestão de Serviços ou Centralizador SQL) configurado com sua marca e regras comerciais.',
     deliverables: [
-      'Implantação completa na Vercel + banco Supabase dedicado',
-      'Importação inicial de clientes, contratos e histórico de planilhas',
-      'Painéis de receita, inadimplência e produtividade prontos para uso',
-      'Treinamento operacional para sua equipe',
+      'Deploy completo na Vercel + banco Supabase dedicado',
+      'Migração inicial de planilhas, clientes e contratos',
+      'Painéis de receita, inadimplência e SLA prontos para uso',
+      'Treinamento prático para sua equipe operacional',
     ],
     cta: 'Adquirir Solução Pronta',
   },
   {
     id: 'personalizada' as const,
-    audience: 'Para operações com fluxos específicos do nicho',
-    title: 'Sistema Sob Medida para Seu Nicho',
+    audience: 'Arquitetura exclusiva para seu nicho',
+    title: 'Sistema Sob Medida',
     summary:
-      'Arquitetura desenhada do zero para a realidade do seu setor (clínicas, transportadoras, distribuidoras, prestadores B2B), com integrações sob demanda.',
+      'Desenvolvimento focado nas regras específicas do seu segmento (clínicas, transportadoras, distribuidoras, serviços B2B) e integrações necessárias.',
     deliverables: [
-      'Levantamento de gargalos e modelagem exclusiva no PostgreSQL',
-      'Automação de cobranças, comissões, repasses ou ordens de serviço',
-      'Controle de permissões por nível de gestor e operador',
-      'Evolução contínua via repositório GitHub dedicado',
+      'Mapeamento de gargalos e modelagem exclusiva no PostgreSQL',
+      'Automação de cobranças, repasses, comissões ou ordens',
+      'Controle granular de acesso por perfil de usuário',
+      'Código versionado no GitHub pronto para evoluir',
     ],
-    cta: 'Solicitar Sistema Personalizado',
+    cta: 'Solicitar Sistema Sob Medida',
   },
 ];
 
@@ -131,17 +131,17 @@ export function SolutionsAndQuoteSection({
   };
 
   return (
-    <section id="solucoes" className="bg-white py-16 sm:py-20">
+    <section id="solucoes" className="bg-[#090F1D] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
-          <p className="text-xs font-medium tracking-wide text-blue-700">
-            05. Contratação &amp; Escopo do Projeto
+          <p className="text-xs font-medium tracking-wide text-sky-400">
+            05. Contratação &amp; Escopo
           </p>
-          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl [text-wrap:balance]">
-            Escolha um sistema pronto ou solicite uma solução sob medida
+          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl [text-wrap:balance]">
+            Adquira uma solução pronta ou encomende para seu nicho
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-            Defina o modelo ideal para o momento da sua empresa e envie os dados do seu cenário para receber uma proposta técnica objetiva.
+          <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
+            Selecione o formato ideal para sua empresa e envie seu cenário para receber proposta de implantação.
           </p>
         </div>
 
@@ -154,24 +154,24 @@ export function SolutionsAndQuoteSection({
                 key={model.id}
                 className={`flex flex-col justify-between rounded-xl border p-6 sm:p-8 transition-colors duration-150 ${
                   isSelected
-                    ? 'border-blue-700 bg-blue-50/25'
-                    : 'border-slate-200 bg-white'
+                    ? 'border-blue-500 bg-[#0F172A]'
+                    : 'border-slate-800 bg-[#0B1221]'
                 }`}
               >
                 <div>
-                  <p className="text-xs font-medium text-blue-700">{model.audience}</p>
-                  <h3 className="mt-2 font-display text-xl font-bold text-slate-900">
+                  <p className="text-xs font-medium text-sky-400">{model.audience}</p>
+                  <h3 className="mt-2 font-display text-xl font-bold text-white">
                     {model.title}
                   </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-2.5 text-sm leading-relaxed text-slate-300">
                     {model.summary}
                   </p>
 
-                  <ul className="mt-6 space-y-2.5 border-t border-slate-200 pt-5 text-xs sm:text-sm text-slate-700">
+                  <ul className="mt-6 space-y-2.5 border-t border-slate-800 pt-5 text-xs sm:text-sm text-slate-200">
                     {model.deliverables.map((item) => (
                       <li key={item} className="flex items-start gap-2.5">
                         <Check
-                          className="mt-0.5 h-4 w-4 shrink-0 text-blue-700"
+                          className="mt-0.5 h-4 w-4 shrink-0 text-sky-400"
                           aria-hidden="true"
                         />
                         <span>{item}</span>
@@ -190,8 +190,8 @@ export function SolutionsAndQuoteSection({
                     }}
                     className={`inline-flex w-full items-center justify-center rounded-lg px-4 py-2.5 text-xs font-semibold transition-colors cursor-pointer ${
                       isSelected
-                        ? 'bg-blue-700 text-white hover:bg-blue-800'
-                        : 'border border-slate-300 bg-white text-slate-900 hover:bg-slate-50'
+                        ? 'bg-blue-600 text-white hover:bg-blue-500'
+                        : 'border border-slate-700 bg-slate-900 text-white hover:border-slate-500'
                     }`}
                   >
                     {model.cta}
@@ -205,27 +205,27 @@ export function SolutionsAndQuoteSection({
         {/* Formulário de Solicitação */}
         <div
           id="contato"
-          className="mt-12 grid grid-cols-1 gap-8 rounded-xl border border-slate-200 bg-slate-50 p-6 sm:p-8 lg:grid-cols-12"
+          className="mt-12 grid grid-cols-1 gap-8 rounded-xl border border-slate-800 bg-[#0F172A] p-6 sm:p-8 lg:grid-cols-12"
         >
           <div className="lg:col-span-5">
-            <h3 className="font-display text-xl font-bold text-slate-900">
-              Solicitar Diagnóstico ou Aquisição
+            <h3 className="font-display text-xl font-bold text-white">
+              Solicitar Diagnóstico ou Proposta
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              Descreva brevemente como sua empresa controla os dados e o faturamento hoje. Retorno com escopo, prazo de entrega e estrutura no Supabase.
+            <p className="mt-2 text-sm leading-relaxed text-slate-300">
+              Conte como sua operação controla os dados e o faturamento hoje. Retorno com arquitetura recomendada, prazo e valores.
             </p>
 
-            <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 text-xs text-slate-600">
+            <div className="mt-6 space-y-3 border-t border-slate-800 pt-5 text-xs text-slate-300">
               <p>
-                <span className="font-semibold text-slate-900">Destino dos registros:</span>{' '}
+                <span className="font-semibold text-white">Persistência:</span>{' '}
                 {isSupabaseConfigured
-                  ? 'Conectado diretamente ao PostgreSQL no Supabase'
-                  : 'Modo de demonstração local (pronto para Supabase via .env)'}
+                  ? 'Gravando diretamente no PostgreSQL (Supabase)'
+                  : 'Armazenamento local ativo (pronto para Supabase via .env)'}
               </p>
               {estimatedHoursSaved && (
                 <p>
-                  <span className="font-semibold text-slate-900">Economia simulada:</span>{' '}
-                  <span className="font-mono font-semibold text-blue-700 tabular-nums">
+                  <span className="font-semibold text-white">Economia simulada:</span>{' '}
+                  <span className="font-mono font-semibold text-sky-400 tabular-nums">
                     {estimatedHoursSaved} h/mês
                   </span>
                 </p>
@@ -233,17 +233,17 @@ export function SolutionsAndQuoteSection({
             </div>
 
             {recentHistory.length > 0 && !isSupabaseConfigured && (
-              <div className="mt-6 border-t border-slate-200 pt-5">
-                <p className="text-xs font-semibold text-slate-800">
-                  Solicitações registradas nesta sessão ({recentHistory.length})
+              <div className="mt-6 border-t border-slate-800 pt-5">
+                <p className="text-xs font-semibold text-white">
+                  Solicitações salvas nesta sessão ({recentHistory.length})
                 </p>
-                <ul className="mt-2 space-y-2 text-xs text-slate-600">
+                <ul className="mt-2 space-y-2 text-xs text-slate-400">
                   {recentHistory.slice(0, 3).map((item) => (
                     <li key={item.id} className="flex items-center justify-between gap-2">
-                      <span className="truncate font-medium text-slate-800">
+                      <span className="truncate font-medium text-slate-200">
                         {item.company_name} · {item.niche}
                       </span>
-                      <span className="font-mono text-[11px] text-slate-500 whitespace-nowrap">
+                      <span className="font-mono text-[11px] text-slate-400 whitespace-nowrap">
                         {new Date(item.created_at).toLocaleDateString('pt-BR')}
                       </span>
                     </li>
@@ -257,26 +257,26 @@ export function SolutionsAndQuoteSection({
             {submittedRecord ? (
               <div
                 role="status"
-                className="rounded-xl border border-emerald-200 bg-white p-6 sm:p-8"
+                className="rounded-xl border border-emerald-800/70 bg-[#0B1221] p-6 sm:p-8"
               >
-                <p className="text-xs font-semibold text-emerald-700">
+                <p className="text-xs font-semibold text-emerald-400">
                   Solicitação registrada com sucesso
                 </p>
-                <h4 className="mt-2 font-display text-xl font-bold text-slate-900">
+                <h4 className="mt-2 font-display text-xl font-bold text-white">
                   Recebemos o pedido de {submittedRecord.company_name}
                 </h4>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  O protocolo{' '}
-                  <span className="font-mono font-semibold text-slate-900">
+                <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                  Protocolo{' '}
+                  <span className="font-mono font-semibold text-white">
                     {submittedRecord.id.slice(0, 8).toUpperCase()}
                   </span>{' '}
-                  foi salvo ({submittedRecord.storage_target === 'supabase' ? 'Supabase PostgreSQL' : 'armazenamento de demonstração'}). Entraremos em contato via{' '}
-                  <strong className="text-slate-900">{submittedRecord.contact_channel}</strong>.
+                  salvo ({submittedRecord.storage_target === 'supabase' ? 'Supabase PostgreSQL' : 'modo demonstração local'}). Retornaremos pelo contato{' '}
+                  <strong className="text-white">{submittedRecord.contact_channel}</strong>.
                 </p>
                 <button
                   type="button"
                   onClick={() => setSubmittedRecord(null)}
-                  className="mt-6 inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-900 hover:bg-slate-50 cursor-pointer"
+                  className="mt-6 inline-flex items-center rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 cursor-pointer"
                 >
                   Enviar Nova Solicitação
                 </button>
@@ -285,13 +285,13 @@ export function SolutionsAndQuoteSection({
               <form
                 onSubmit={handleSubmit}
                 noValidate
-                className="space-y-4 rounded-xl border border-slate-200 bg-white p-6"
+                className="space-y-4 rounded-xl border border-slate-800 bg-[#0B1221] p-6"
               >
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label
                       htmlFor="client-name"
-                      className="block text-xs font-medium text-slate-700"
+                      className="block text-xs font-medium text-slate-300"
                     >
                       Seu Nome
                     </label>
@@ -302,14 +302,14 @@ export function SolutionsAndQuoteSection({
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
                       placeholder="Ex.: Mariana Costa"
-                      className="mt-1.5 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-700 focus:outline-none"
+                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="company-name"
-                      className="block text-xs font-medium text-slate-700"
+                      className="block text-xs font-medium text-slate-300"
                     >
                       Empresa
                     </label>
@@ -320,7 +320,7 @@ export function SolutionsAndQuoteSection({
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
                       placeholder="Ex.: Clínica Vida Plena"
-                      className="mt-1.5 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-700 focus:outline-none"
+                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -329,7 +329,7 @@ export function SolutionsAndQuoteSection({
                   <div>
                     <label
                       htmlFor="contact-channel"
-                      className="block text-xs font-medium text-slate-700"
+                      className="block text-xs font-medium text-slate-300"
                     >
                       E-mail ou WhatsApp
                     </label>
@@ -340,12 +340,12 @@ export function SolutionsAndQuoteSection({
                       value={contactChannel}
                       onChange={(e) => setContactChannel(e.target.value)}
                       placeholder="contato@empresa.com.br ou (11) 99999-0000"
-                      className="mt-1.5 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-700 focus:outline-none"
+                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="niche" className="block text-xs font-medium text-slate-700">
+                    <label htmlFor="niche" className="block text-xs font-medium text-slate-300">
                       Nicho de Serviço ou Produto
                     </label>
                     <input
@@ -354,7 +354,7 @@ export function SolutionsAndQuoteSection({
                       value={niche}
                       onChange={(e) => setNiche(e.target.value)}
                       placeholder="Ex.: Transportadora, Clínica, Varejo"
-                      className="mt-1.5 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-700 focus:outline-none"
+                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -363,7 +363,7 @@ export function SolutionsAndQuoteSection({
                   <div>
                     <label
                       htmlFor="solution-type"
-                      className="block text-xs font-medium text-slate-700"
+                      className="block text-xs font-medium text-slate-300"
                     >
                       Tipo de Solução
                     </label>
@@ -375,7 +375,7 @@ export function SolutionsAndQuoteSection({
                           e.target.value as 'pronta' | 'personalizada' | 'repositorio'
                         )
                       }
-                      className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-700 focus:outline-none"
+                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none"
                     >
                       <option value="pronta">Solução Pronta Adaptada</option>
                       <option value="personalizada">Sistema Sob Medida para Meu Nicho</option>
@@ -386,7 +386,7 @@ export function SolutionsAndQuoteSection({
                   <div>
                     <label
                       htmlFor="monthly-volume"
-                      className="block text-xs font-medium text-slate-700"
+                      className="block text-xs font-medium text-slate-300"
                     >
                       Volume Mensal Estimado
                     </label>
@@ -394,7 +394,7 @@ export function SolutionsAndQuoteSection({
                       id="monthly-volume"
                       value={monthlyVolume}
                       onChange={(e) => setMonthlyVolume(e.target.value)}
-                      className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-700 focus:outline-none"
+                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none"
                     >
                       <option value="Até 100 lançamentos/mês">Até 100 lançamentos/mês</option>
                       <option value="100 a 500 lançamentos/mês">100 a 500 lançamentos/mês</option>
@@ -412,7 +412,7 @@ export function SolutionsAndQuoteSection({
                   <div>
                     <label
                       htmlFor="reference-project"
-                      className="block text-xs font-medium text-slate-700"
+                      className="block text-xs font-medium text-slate-300"
                     >
                       Projeto ou Módulo de Referência
                     </label>
@@ -421,13 +421,13 @@ export function SolutionsAndQuoteSection({
                       type="text"
                       value={referenceProject}
                       onChange={(e) => setReferenceProject(e.target.value)}
-                      className="mt-1.5 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 font-mono text-xs text-slate-800 focus:border-blue-700 focus:bg-white focus:outline-none"
+                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 font-mono text-xs text-sky-400 focus:border-blue-500 focus:outline-none"
                     />
                   </div>
                 )}
 
                 <div>
-                  <label htmlFor="notes" className="block text-xs font-medium text-slate-700">
+                  <label htmlFor="notes" className="block text-xs font-medium text-slate-300">
                     Objetivo Principal e Gargalos Atuais
                   </label>
                   <textarea
@@ -435,13 +435,13 @@ export function SolutionsAndQuoteSection({
                     rows={3}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Ex.: Hoje controlamos faturamento e ordens de serviço em 4 planilhas separadas e perdemos 2 dias por semana consolidando..."
-                    className="mt-1.5 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-700 focus:outline-none"
+                    placeholder="Ex.: Hoje controlamos faturamento e ordens de serviço em 4 planilhas separadas..."
+                    className="mt-1.5 w-full rounded-lg border border-slate-700 bg-[#060B16] px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
 
                 {formError && (
-                  <p role="alert" className="text-xs font-medium text-red-700">
+                  <p role="alert" className="text-xs font-medium text-red-400">
                     {formError}
                   </p>
                 )}
@@ -449,7 +449,7 @@ export function SolutionsAndQuoteSection({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-800 disabled:opacity-60 cursor-pointer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-500 disabled:opacity-60 cursor-pointer"
                 >
                   {submitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
                   {submitting ? 'Registrando Solicitação...' : 'Enviar Solicitação de Proposta'}

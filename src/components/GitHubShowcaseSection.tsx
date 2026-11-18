@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  ArrowRight,
   ExternalLink,
   Eye,
   FolderGit2,
   Loader2,
   RefreshCw,
   X,
-  ArrowRight,
 } from 'lucide-react';
 import {
   fetchGitHubRepoInspectData,
@@ -22,6 +22,45 @@ interface GitHubShowcaseSectionProps {
 const CATEGORIES = ['Todos', 'Faturamento', 'Gestão', 'Dados & BI', 'Automação'] as const;
 const GITHUB_USER_STORAGE_KEY = 'vertice_github_username_v1';
 
+function MiniRepoSparkline({ category }: { category: ShowcaseRepository['category'] }) {
+  const path =
+    category === 'Faturamento'
+      ? 'M 4 36 L 34 30 L 64 26 L 94 18 L 124 14 L 154 8'
+      : category === 'Dados & BI'
+        ? 'M 4 34 L 34 32 L 64 20 L 94 22 L 124 10 L 154 6'
+        : category === 'Automação'
+          ? 'M 4 38 L 34 26 L 64 24 L 94 14 L 124 12 L 154 9'
+          : 'M 4 32 L 34 28 L 64 22 L 94 19 L 124 13 L 154 10';
+
+  return (
+    <div className="mt-4 rounded-lg border border-slate-800 bg-[#060B16] p-3">
+      <div className="flex items-center justify-between text-[11px] text-slate-400">
+        <span>Prévia de Interface · {category}</span>
+        <span className="font-mono text-sky-400">SQL + Vercel</span>
+      </div>
+      <div className="mt-2.5 flex items-end justify-between gap-4">
+        <div className="grid grid-cols-3 gap-3 text-[11px]">
+          <div>
+            <span className="block text-slate-500">Módulo</span>
+            <span className="font-mono font-medium text-slate-200">{category}</span>
+          </div>
+          <div>
+            <span className="block text-slate-500">Status</span>
+            <span className="font-mono font-medium text-emerald-400">Ativo</span>
+          </div>
+          <div>
+            <span className="block text-slate-500">Base</span>
+            <span className="font-mono font-medium text-slate-200">Supabase</span>
+          </div>
+        </div>
+        <svg viewBox="0 0 158 42" className="h-9 w-28 shrink-0" aria-hidden="true">
+          <path d={path} fill="none" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSectionProps) {
   const envDefaultUser = (import.meta.env.VITE_GITHUB_USERNAME as string | undefined) || '';
   const initialUser = useMemo(() => {
@@ -29,7 +68,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
       const saved = localStorage.getItem(GITHUB_USER_STORAGE_KEY);
       if (saved) return saved;
     } catch {
-      // ignora indisponibilidade de storage
+      // ignora
     }
     return envDefaultUser && !envDefaultUser.includes('seu-usuario') ? envDefaultUser : '';
   }, [envDefaultUser]);
@@ -113,18 +152,18 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
   }, [repos, categoryFilter]);
 
   return (
-    <section id="repositorios" className="border-b border-slate-200 bg-slate-50 py-16 sm:py-20">
+    <section id="repositorios" className="border-b border-slate-800/80 bg-[#090F1D] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
-            <p className="text-xs font-medium tracking-wide text-blue-700">
-              03. Portfólio Conectado ao GitHub
+            <p className="text-xs font-medium tracking-wide text-sky-400">
+              03. Projetos em Repositórios GitHub
             </p>
-            <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl [text-wrap:balance]">
-              Pré-visualização de cada sistema por repositório
+            <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl [text-wrap:balance]">
+              Pré-visualização interativa de cada repositório do seu GitHub
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-              Conecte seu usuário do GitHub para puxar automaticamente seus repositórios públicos e abrir a pré-visualização técnica e funcional de cada projeto sem sair desta página.
+            <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
+              Informe seu nome de usuário do GitHub para sincronizar todos os seus repositórios públicos e abrir a prévia de tela, arquitetura e documentação de cada projeto.
             </p>
           </div>
 
@@ -135,38 +174,38 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
             }}
             className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto"
           >
-            <div className="relative flex-1 sm:w-60">
+            <div className="relative flex-1 sm:w-64">
               <FolderGit2
-                className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400"
+                className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-500"
                 aria-hidden="true"
               />
               <input
                 type="text"
                 value={githubInput}
                 onChange={(e) => setGithubInput(e.target.value)}
-                placeholder="Seu usuário no GitHub"
+                placeholder="Seu usuário do GitHub"
                 aria-label="Nome de usuário do GitHub"
-                className="w-full rounded-lg border border-slate-300 bg-white py-2 pr-3 pl-9 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-700 focus:outline-none"
+                className="w-full rounded-lg border border-slate-700 bg-[#0F172A] py-2 pr-3 pl-9 text-xs text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
               />
             </div>
             <button
               type="submit"
               disabled={loadingRepos}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-slate-800 disabled:opacity-60 whitespace-nowrap shrink-0 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-blue-500 disabled:opacity-60 whitespace-nowrap shrink-0 cursor-pointer"
             >
               {loadingRepos ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
               ) : (
                 <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
               )}
-              Carregar Repositórios
+              Sincronizar GitHub
             </button>
           </form>
         </div>
 
-        {/* Estado da conexão GitHub */}
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
-          <div className="flex flex-wrap items-center gap-1 rounded-lg bg-slate-200/70 p-1">
+        {/* Barra de categorias */}
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+          <div className="inline-flex flex-wrap items-center gap-1 rounded-lg border border-slate-800 bg-[#0F172A] p-1">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
@@ -174,8 +213,8 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                 onClick={() => setCategoryFilter(cat)}
                 className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
                   categoryFilter === cat
-                    ? 'bg-white text-slate-900 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {cat}
@@ -183,25 +222,25 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
             ))}
           </div>
 
-          <div className="text-xs text-slate-600">
+          <div className="text-xs text-slate-400">
             {connectedUser ? (
               <span>
-                Exibindo repositórios ao vivo de{' '}
-                <strong className="font-mono text-slate-900">@{connectedUser}</strong> ·{' '}
+                Conectado ao GitHub:{' '}
+                <strong className="font-mono text-white">@{connectedUser}</strong> ·{' '}
                 <button
                   type="button"
                   onClick={() => {
                     setGithubInput('');
                     void loadUserRepos('');
                   }}
-                  className="font-medium text-blue-700 hover:underline cursor-pointer"
+                  className="font-medium text-sky-400 hover:underline cursor-pointer"
                 >
-                  Voltar aos modelos base
+                  Restaurar modelos base
                 </button>
               </span>
             ) : (
               <span>
-                Exibindo 4 arquiteturas base · Digite seu usuário acima para listar seus repositórios reais
+                4 arquiteturas base exibidas · Conecte seu @usuario acima para listar seus repositórios ao vivo
               </span>
             )}
           </div>
@@ -210,19 +249,19 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
         {repoError && (
           <div
             role="alert"
-            className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs font-medium text-red-800"
+            className="mt-4 rounded-lg border border-red-900/70 bg-red-950/50 px-4 py-3 text-xs font-medium text-red-300"
           >
             {repoError}
           </div>
         )}
 
-        {/* Grade de repositórios */}
+        {/* Grade de Repositórios */}
         {loadingRepos ? (
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
             {[1, 2, 3, 4].map((skeleton) => (
               <div
                 key={skeleton}
-                className="h-56 animate-pulse rounded-xl border border-slate-200 bg-white p-6"
+                className="h-64 animate-pulse rounded-xl border border-slate-800 bg-[#0F172A] p-6"
               />
             ))}
           </div>
@@ -231,36 +270,32 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
             {filteredRepos.map((repo) => (
               <article
                 key={repo.id}
-                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 transition-colors duration-150 hover:border-slate-300"
+                className="flex flex-col justify-between rounded-xl border border-slate-800 bg-[#0F172A] p-6 transition-colors duration-150 hover:border-slate-700"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-4 text-xs text-slate-500">
-                    <span className="truncate font-mono text-slate-600">{repo.fullName}</span>
-                    <span className="whitespace-nowrap shrink-0">
+                  <div className="flex items-center justify-between gap-4 text-xs text-slate-400">
+                    <span className="truncate font-mono text-slate-400">{repo.fullName}</span>
+                    <span className="whitespace-nowrap shrink-0 text-sky-400">
                       {repo.category} · {repo.language}
                     </span>
                   </div>
 
-                  <h3 className="mt-3 font-display text-lg font-semibold text-slate-900">
+                  <h3 className="mt-3 font-display text-lg font-semibold text-white">
                     {repo.title}
                   </h3>
 
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-300">
                     {repo.description}
                   </p>
 
-                  <p className="mt-3 text-xs leading-relaxed text-slate-700">
-                    <span className="font-semibold text-slate-900">Ganho para o cliente:</span>{' '}
-                    {repo.businessValue}
-                  </p>
+                  <MiniRepoSparkline category={repo.category} />
                 </div>
 
-                <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-4">
-                  <div className="flex items-center gap-3 font-mono text-xs text-slate-500 tabular-nums">
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-4">
+                  <div className="flex items-center gap-3 font-mono text-xs text-slate-400 tabular-nums">
                     <span>{repo.stars} stars</span>
                     <span aria-hidden="true">·</span>
                     <span>
-                      Atualizado{' '}
                       {new Date(repo.updatedAt).toLocaleDateString('pt-BR', {
                         month: 'short',
                         year: 'numeric',
@@ -274,7 +309,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                         href={repo.homepageUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 hover:text-slate-900 whitespace-nowrap"
+                        className="inline-flex items-center gap-1 text-xs font-medium text-slate-300 hover:text-white whitespace-nowrap"
                       >
                         Demo
                         <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -284,7 +319,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                     <button
                       type="button"
                       onClick={() => void openPreview(repo)}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-900 transition-colors hover:border-blue-700 hover:text-blue-700 whitespace-nowrap shrink-0 cursor-pointer"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-[#0B1221] px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:border-blue-500 hover:text-sky-400 whitespace-nowrap shrink-0 cursor-pointer"
                     >
                       <Eye className="h-3.5 w-3.5" aria-hidden="true" />
                       Pré-visualizar Projeto
@@ -295,14 +330,14 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
             ))}
           </div>
         ) : (
-          <div className="mt-8 rounded-xl border border-slate-200 bg-white p-10 text-center">
-            <p className="text-sm font-medium text-slate-900">
+          <div className="mt-8 rounded-xl border border-slate-800 bg-[#0F172A] p-10 text-center">
+            <p className="text-sm font-medium text-white">
               Nenhum repositório encontrado na categoria "{categoryFilter}".
             </p>
             <button
               type="button"
               onClick={() => setCategoryFilter('Todos')}
-              className="mt-3 text-xs font-semibold text-blue-700 hover:underline cursor-pointer"
+              className="mt-3 text-xs font-semibold text-sky-400 hover:underline cursor-pointer"
             >
               Exibir todas as categorias
             </button>
@@ -310,27 +345,27 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
         )}
       </div>
 
-      {/* Gaveta / Modal de Pré-visualização do Repositório */}
+      {/* Gaveta de Pré-visualização com Simulação Visual de Tela */}
       {selectedRepo && (
         <div
-          className="fixed inset-0 z-50 flex justify-end bg-slate-950/50 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-xs"
           role="dialog"
           aria-modal="true"
           aria-labelledby="repo-preview-title"
           onClick={() => setSelectedRepo(null)}
         >
           <div
-            className="flex h-full w-full max-w-2xl flex-col bg-white shadow-2xl"
+            className="flex h-full w-full max-w-2xl flex-col border-l border-slate-800 bg-[#0B1221] text-slate-100 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4 border-b border-slate-200 px-6 py-5">
+            <div className="flex items-start justify-between gap-4 border-b border-slate-800 px-6 py-5">
               <div className="min-w-0">
-                <p className="truncate font-mono text-xs text-slate-500">
+                <p className="truncate font-mono text-xs text-sky-400">
                   {selectedRepo.fullName} · {selectedRepo.category}
                 </p>
                 <h3
                   id="repo-preview-title"
-                  className="mt-1 font-display text-xl font-bold text-slate-900"
+                  className="mt-1 font-display text-xl font-bold text-white"
                 >
                   {selectedRepo.title}
                 </h3>
@@ -340,35 +375,35 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                 type="button"
                 onClick={() => setSelectedRepo(null)}
                 aria-label="Fechar pré-visualização"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 shrink-0 cursor-pointer"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white shrink-0 cursor-pointer"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
-            <div className="flex items-center justify-between gap-4 border-b border-slate-200 bg-slate-50 px-6 py-2.5">
-              <div className="flex items-center gap-1 rounded-lg bg-slate-200/70 p-1">
+            <div className="flex items-center justify-between gap-4 border-b border-slate-800 bg-[#060B16] px-6 py-2.5">
+              <div className="flex items-center gap-1 rounded-lg border border-slate-800 bg-[#0F172A] p-1">
                 <button
                   type="button"
                   onClick={() => setInspectTab('preview')}
                   className={`rounded-md px-3 py-1 text-xs font-medium cursor-pointer ${
                     inspectTab === 'preview'
-                      ? 'bg-white text-slate-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-blue-600 text-white'
+                      : 'text-slate-300 hover:text-white'
                   }`}
                 >
-                  Pré-visualização Funcional
+                  Prévia Visual do Sistema
                 </button>
                 <button
                   type="button"
                   onClick={() => setInspectTab('readme')}
                   className={`rounded-md px-3 py-1 text-xs font-medium cursor-pointer ${
                     inspectTab === 'readme'
-                      ? 'bg-white text-slate-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-blue-600 text-white'
+                      : 'text-slate-300 hover:text-white'
                   }`}
                 >
-                  Documentação &amp; Stack
+                  README &amp; Stack
                 </button>
               </div>
 
@@ -377,7 +412,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                   href={selectedRepo.htmlUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:underline whitespace-nowrap"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-sky-400 hover:underline whitespace-nowrap"
                 >
                   Abrir no GitHub
                   <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
@@ -388,39 +423,52 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
             <div className="flex-1 overflow-y-auto p-6">
               {inspectTab === 'preview' ? (
                 <div className="space-y-6">
-                  <div>
-                    <h4 className="text-xs font-semibold tracking-wide text-slate-500">
-                      Resumo Executivo
-                    </h4>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      {selectedRepo.description}
-                    </p>
-                  </div>
+                  {/* Simulação de janela de aplicação */}
+                  <div className="overflow-hidden rounded-xl border border-slate-800 bg-[#060B16]">
+                    <div className="flex items-center justify-between border-b border-slate-800 bg-[#0F172A] px-4 py-2.5 text-[11px] text-slate-400">
+                      <span className="font-mono truncate">
+                        {selectedRepo.homepageUrl || `https://${selectedRepo.name}.vercel.app`}
+                      </span>
+                      <span className="font-mono text-emerald-400">Produção</span>
+                    </div>
 
-                  {/* Métricas de impacto da solução */}
-                  <div className="grid grid-cols-1 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-slate-50 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-                    {selectedRepo.previewMetrics.map((m) => (
-                      <div key={m.label} className="p-4">
-                        <p className="text-xs text-slate-500">{m.label}</p>
-                        <p className="mt-1 font-mono text-lg font-semibold text-slate-900 tabular-nums">
-                          {m.value}
+                    <div className="p-5">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        {selectedRepo.previewMetrics.map((m) => (
+                          <div
+                            key={m.label}
+                            className="rounded-lg border border-slate-800 bg-[#0F172A] p-3.5"
+                          >
+                            <p className="text-[11px] text-slate-400">{m.label}</p>
+                            <p className="mt-1 font-mono text-base font-semibold text-white tabular-nums">
+                              {m.value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-4 rounded-lg border border-slate-800 bg-[#0F172A] p-4">
+                        <p className="text-xs font-semibold text-white">
+                          Impacto Operacional Entregue
+                        </p>
+                        <p className="mt-1 text-xs leading-relaxed text-slate-300">
+                          {selectedRepo.businessValue}
                         </p>
                       </div>
-                    ))}
+                    </div>
                   </div>
 
-                  {/* Arquitetura de fluxo */}
                   <div>
-                    <h4 className="text-xs font-semibold tracking-wide text-slate-500">
-                      Fluxo Automatizado do Sistema
+                    <h4 className="text-xs font-semibold tracking-wide text-slate-400">
+                      Etapas Automatizadas no Sistema
                     </h4>
                     <ol className="mt-3 space-y-2.5">
                       {selectedRepo.previewWorkflow.map((step, i) => (
                         <li
                           key={step}
-                          className="flex items-start gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800"
+                          className="flex items-start gap-3 rounded-lg border border-slate-800 bg-[#0F172A] px-4 py-3 text-sm text-slate-200"
                         >
-                          <span className="font-mono text-xs font-semibold text-blue-700 tabular-nums mt-0.5">
+                          <span className="font-mono text-xs font-semibold text-sky-400 tabular-nums mt-0.5">
                             0{i + 1}.
                           </span>
                           <span>{step}</span>
@@ -430,20 +478,17 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                   </div>
 
                   {selectedRepo.homepageUrl && (
-                    <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4">
-                      <p className="text-xs font-semibold text-slate-900">
-                        Aplicação publicada em produção
-                      </p>
-                      <p className="mt-1 text-xs text-slate-600">
-                        Este repositório possui uma URL de demonstração configurada no GitHub.
+                    <div className="rounded-xl border border-blue-900/70 bg-blue-950/30 p-4">
+                      <p className="text-xs font-semibold text-white">
+                        Ambiente ao vivo publicado
                       </p>
                       <a
                         href={selectedRepo.homepageUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:underline"
+                        className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:underline"
                       >
-                        Acessar ambiente publicado ({selectedRepo.homepageUrl})
+                        Abrir URL de demonstração ({selectedRepo.homepageUrl})
                         <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                       </a>
                     </div>
@@ -452,7 +497,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
               ) : (
                 <div className="space-y-6">
                   {inspectLoading ? (
-                    <div className="flex items-center gap-2 py-8 text-xs text-slate-500">
+                    <div className="flex items-center gap-2 py-8 text-xs text-slate-400">
                       <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                       Consultando README e linguagens diretamente da API do GitHub...
                     </div>
@@ -460,21 +505,21 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                     <>
                       {inspectData?.languages && inspectData.languages.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-semibold tracking-wide text-slate-500">
+                          <h4 className="text-xs font-semibold tracking-wide text-slate-400">
                             Composição de Linguagens (GitHub API)
                           </h4>
                           <div className="mt-3 space-y-2">
                             {inspectData.languages.map((lang) => (
                               <div key={lang.name} className="space-y-1">
                                 <div className="flex justify-between text-xs">
-                                  <span className="font-medium text-slate-800">{lang.name}</span>
-                                  <span className="font-mono text-slate-600 tabular-nums">
+                                  <span className="font-medium text-slate-200">{lang.name}</span>
+                                  <span className="font-mono text-slate-400 tabular-nums">
                                     {lang.percentage}%
                                   </span>
                                 </div>
-                                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
                                   <div
-                                    className="h-full bg-blue-700"
+                                    className="h-full bg-sky-400"
                                     style={{ width: `${lang.percentage}%` }}
                                   />
                                 </div>
@@ -485,18 +530,18 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                       )}
 
                       <div>
-                        <h4 className="text-xs font-semibold tracking-wide text-slate-500">
-                          Documentação do Repositório (README)
+                        <h4 className="text-xs font-semibold tracking-wide text-slate-400">
+                          Documentação (README.md)
                         </h4>
                         {inspectData?.readmeExcerpt ? (
-                          <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-xl border border-slate-200 bg-slate-50 p-4 font-mono text-xs leading-relaxed text-slate-800">
+                          <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-xl border border-slate-800 bg-[#060B16] p-4 font-mono text-xs leading-relaxed text-slate-200">
                             {inspectData.readmeExcerpt}
                           </pre>
                         ) : (
-                          <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                          <p className="mt-2 text-xs leading-relaxed text-slate-400">
                             {selectedRepo.isLiveGitHub
-                              ? 'Este repositório não possui um arquivo README.md público ou atingiu o limite temporário de leitura.'
-                              : 'Arquitetura modelo pronta para implantação. Conecte seu usuário do GitHub acima para visualizar o README.md real dos seus repositórios.'}
+                              ? 'Este repositório não possui um README.md público disponível.'
+                              : 'Arquitetura modelo pronta para implantação. Conecte seu @usuario do GitHub acima para inspecionar o README real dos seus repositórios.'}
                           </p>
                         )}
                       </div>
@@ -506,9 +551,9 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
               )}
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-white px-6 py-4">
-              <p className="text-xs text-slate-500">
-                Implantável em Vercel + Supabase para sua empresa
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 bg-[#060B16] px-6 py-4">
+              <p className="text-xs text-slate-400">
+                Pronto para deploy na Vercel + banco Supabase
               </p>
               <button
                 type="button"
@@ -517,7 +562,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                   setSelectedRepo(null);
                   onRequestFromRepo(targetRepo);
                 }}
-                className="inline-flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-blue-800 cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-blue-500 cursor-pointer"
               >
                 Solicitar Solução Baseada Neste Projeto
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
