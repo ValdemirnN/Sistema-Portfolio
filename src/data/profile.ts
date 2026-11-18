@@ -68,7 +68,6 @@ export const ABOUT = {
   ],
   facts: [
     { label: 'Formação', value: 'Bacharelado em Sistemas de Informação, UFERSA – Angicos/RN (concluído em 19/12/2024)' },
-    { label: 'Certificação', value: 'Dart com Flutter, Academia do Flutter (em andamento)' },
     { label: 'Atualmente', value: 'Auxiliar Técnico na Consolis – Soluções Inteligentes' },
     { label: 'Localização', value: 'Assu/RN, atendendo clientes remotamente' },
   ],
