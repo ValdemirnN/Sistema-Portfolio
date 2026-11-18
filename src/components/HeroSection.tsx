@@ -58,7 +58,7 @@ export function HeroSection({ onExploreDashboard, onExploreRepos }: HeroSectionP
                 onClick={onExploreDashboard}
                 className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-150 hover:bg-blue-500 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 cursor-pointer"
               >
-                Explorar Painel ao Vivo
+                Ver Sistemas Reais
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </button>
 
@@ -67,7 +67,7 @@ export function HeroSection({ onExploreDashboard, onExploreRepos }: HeroSectionP
                 onClick={onExploreRepos}
                 className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-3 text-sm font-semibold text-slate-100 transition-colors duration-150 hover:border-slate-500 hover:bg-slate-800 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 cursor-pointer"
               >
-                Pré-visualizar Projetos GitHub
+                Solicitar Solução
               </button>
             </div>
           </div>

@@ -399,7 +399,11 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                     {selectedRepo.homepageUrl && (
                       <div className="border-b border-slate-800">
                         <iframe
-                          src={selectedRepo.homepageUrl}
+                          src={
+                            selectedRepo.homepageUrl.includes('streamlit.app')
+                              ? `${selectedRepo.homepageUrl}/?embed=true`
+                              : selectedRepo.homepageUrl
+                          }
                           title={`Prévia ao vivo de ${selectedRepo.title}`}
                           loading="lazy"
                           className="h-[420px] w-full bg-white"

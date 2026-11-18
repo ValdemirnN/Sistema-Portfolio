@@ -6,7 +6,6 @@ interface HeaderProps {
 }
 
 const NAV_LINKS = [
-  { href: '#painel', label: 'Dashboards' },
   { href: '#evolucao', label: 'Impacto & ROI' },
   { href: '#repositorios', label: 'GitHub' },
   { href: '#arquitetura', label: 'Arquitetura' },
@@ -22,7 +21,7 @@ export function Header({ onRequestSolution }: HeaderProps) {
           href="#topo"
           className="font-display text-lg font-bold tracking-tight text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
         >
-          Vértice Sistemas
+          Valdemir Nunes
         </a>
 
         <nav

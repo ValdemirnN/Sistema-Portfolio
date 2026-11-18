@@ -126,7 +126,6 @@ export const FEATURED_PROJECTS: ShowcaseRepository[] = [
     forks: 0,
     updatedAt: '',
     htmlUrl: 'https://github.com/ValdemirnN/ritmo-fit',
-    homepageUrl: 'https://meutreino-app-br.vercel.app',
     isLiveGitHub: true,
     previewMetrics: [
       { label: 'Commits', value: '96' },
