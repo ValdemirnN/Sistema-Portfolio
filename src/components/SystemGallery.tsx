@@ -27,10 +27,13 @@ function DemoNotice({ large = false }: { large?: boolean }) {
  * Galeria de prints de um sistema: imagem principal + miniaturas,
  * e ao clicar abre em tela cheia (setas do teclado e Esc funcionam).
  */
+const AUTOPLAY_MS = 4000;
+
 export function SystemGallery({ name, shots }: { name: string; shots: Shot[] }) {
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const [portrait, setPortrait] = useState<Record<string, boolean>>({});
+  const [paused, setPaused] = useState(false);
 
   const total = shots.length;
   const go = useCallback((delta: number) => setIndex((i) => (i + delta + total) % total), [total]);
@@ -51,12 +54,28 @@ export function SystemGallery({ name, shots }: { name: string; shots: Shot[] }) 
     };
   }, [open, go]);
 
+  // Passa as imagens sozinho a cada 4s. Pausa com o mouse em cima, com a tela
+  // ampliada aberta ou se o visitante prefere menos animação. Ao clicar nas
+  // setas/bolinhas o `index` muda e o contador recomeça.
+  useEffect(() => {
+    if (total < 2 || paused || open) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = window.setTimeout(() => go(1), AUTOPLAY_MS);
+    return () => window.clearTimeout(id);
+  }, [index, total, paused, open, go]);
+
   if (total === 0) return null;
   const current = shots[index];
 
   return (
     <div className="mb-5">
-      <div className="group relative overflow-hidden rounded-lg border border-slate-800 bg-[#060B16]">
+      <div
+        className="group relative overflow-hidden rounded-lg border border-slate-800 bg-[#060B16]"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
+      >
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -64,6 +83,7 @@ export function SystemGallery({ name, shots }: { name: string; shots: Shot[] }) 
           aria-label={`Ampliar imagem: ${current.caption}`}
         >
           <img
+            key={current.src}
             src={current.src}
             alt={`${name}: ${current.caption}`}
             loading="lazy"
@@ -71,7 +91,7 @@ export function SystemGallery({ name, shots }: { name: string; shots: Shot[] }) 
               const { naturalWidth: w, naturalHeight: h } = e.currentTarget;
               setPortrait((p) => (p[current.src] === h > w ? p : { ...p, [current.src]: h > w }));
             }}
-            className={`h-full w-full ${portrait[current.src] ? 'object-contain' : 'object-cover object-top'}`}
+            className={`animate-shot-fade h-full w-full ${portrait[current.src] ? 'object-contain' : 'object-cover object-top'}`}
           />
           <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-md bg-black/60 px-2 py-1 text-[11px] font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
             <Expand className="h-3 w-3" aria-hidden="true" /> Ampliar
