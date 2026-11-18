@@ -113,3 +113,13 @@
   .float-slow, .float-slow-b { animation: none !important; }
   .card-lift:hover { transform: none; }
 }
+
+
+/* Transição suave ao trocar a imagem da galeria dos sistemas */
+@keyframes shot-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-shot-fade {
+  animation: shot-fade 0.5s ease;
+}
