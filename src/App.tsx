@@ -1,57 +1,35 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { useState } from 'react';
-import { BusinessEvolutionSection } from './components/BusinessEvolutionSection';
+import { AboutSection } from './components/AboutSection';
+import { ContactSection } from './components/ContactSection';
+import { ExperienceSection } from './components/ExperienceSection';
 import { Footer } from './components/Footer';
-import { GitHubShowcaseSection } from './components/GitHubShowcaseSection';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
-import {
-  SolutionsAndQuoteSection,
-  type PreselectedQuoteContext,
-} from './components/SolutionsAndQuoteSection';
-import { SpecialistAndStackSection } from './components/SpecialistAndStackSection';
-import type { ShowcaseRepository } from './lib/github';
-
-function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-}
+import { ServicesSection } from './components/ServicesSection';
+import { StackSection } from './components/StackSection';
+import { SystemsSection } from './components/SystemsSection';
 
 export default function App() {
-  const [quoteContext, setQuoteContext] = useState<PreselectedQuoteContext | null>(null);
+  const [reference, setReference] = useState('');
 
-  const handleRequestFromRepo = (repo: ShowcaseRepository) => {
-    setQuoteContext({
-      solutionType: 'repositorio',
-      referenceProject: `${repo.fullName} — ${repo.title}`,
-    });
-    scrollToSection('contato');
+  const handleRequest = (text: string) => {
+    setReference(text);
+    document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen bg-[#060B16] text-slate-100">
-      <Header onRequestSolution={() => scrollToSection('contato')} />
-
+      <Header />
       <main>
-        <HeroSection
-          onExploreDashboard={() => scrollToSection('repositorios')}
-          onExploreRepos={() => scrollToSection('contato')}
-        />
-
-                <BusinessEvolutionSection />
-
-        <GitHubShowcaseSection onRequestFromRepo={handleRequestFromRepo} />
-
-        <SpecialistAndStackSection />
-
-        <SolutionsAndQuoteSection preselectedContext={quoteContext} />
+        <HeroSection />
+        <AboutSection />
+        <ServicesSection />
+        <SystemsSection onRequest={handleRequest} />
+        <ExperienceSection />
+        <StackSection />
+        <ContactSection reference={reference} />
       </main>
-
       <Footer />
     </div>
   );
 }
-
