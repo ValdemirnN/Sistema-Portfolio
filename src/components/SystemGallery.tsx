@@ -1,9 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Expand, Info, X } from 'lucide-react';
 
 export interface Shot {
   src: string;
   caption: string;
+}
+
+/**
+ * Faixa sobre a base do print: avisa que os dados são fictícios
+ * e cobre qualquer marca d'água/resíduo no canto inferior da imagem.
+ */
+function DemoNotice({ large = false }: { large?: boolean }) {
+  return (
+    <div
+      className={`pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-center gap-1.5 bg-slate-950/95 text-amber-200 backdrop-blur-sm ${
+        large ? 'py-2.5 text-sm' : 'py-1.5 text-[11px] sm:py-2 sm:text-xs'
+      }`}
+    >
+      <Info className={large ? 'h-4 w-4' : 'h-3 w-3'} aria-hidden="true" />
+      <span className="font-medium">Valores fictícios — dados de demonstração</span>
+    </div>
+  );
 }
 
 /**
@@ -60,6 +77,7 @@ export function SystemGallery({ name, shots }: { name: string; shots: Shot[] }) 
             <Expand className="h-3 w-3" aria-hidden="true" /> Ampliar
           </span>
         </button>
+        <DemoNotice />
 
         {total > 1 && (
           <>
@@ -125,12 +143,17 @@ export function SystemGallery({ name, shots }: { name: string; shots: Shot[] }) 
           </div>
 
           <div className="relative flex min-h-0 flex-1 items-center justify-center">
-            <img
-              src={current.src}
-              alt={`${name}: ${current.caption}`}
+            <div
+              className="relative overflow-hidden rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
-              className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
-            />
+            >
+              <img
+                src={current.src}
+                alt={`${name}: ${current.caption}`}
+                className="block max-h-[calc(100vh-9rem)] max-w-full object-contain"
+              />
+              <DemoNotice large />
+            </div>
             {total > 1 && (
               <>
                 <button
