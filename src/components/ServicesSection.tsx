@@ -1,10 +1,10 @@
-import { BarChart3, CheckCircle2, Cloud, Database, Globe, Smartphone, Workflow, type LucideIcon } from 'lucide-react';
+import { BarChart3, CheckCircle2, Globe, Smartphone, Workflow, type LucideIcon } from 'lucide-react';
 import { SectionTitle } from './SectionTitle';
 import { SERVICES, SERVICES_INTRO } from '../data/profile';
 
 // um ícone por serviço (mesma ordem de SERVICES) e larguras alternadas
-const ICONS: LucideIcon[] = [BarChart3, Workflow, Globe, Smartphone, Database, Cloud];
-const SPANS = ['lg:col-span-4', 'lg:col-span-2', 'lg:col-span-2', 'lg:col-span-4', 'lg:col-span-3', 'lg:col-span-3'];
+const ICONS: LucideIcon[] = [BarChart3, Workflow, Globe, Smartphone];
+const SPANS = ['lg:col-span-4', 'lg:col-span-2', 'lg:col-span-2', 'lg:col-span-4'];
 
 export function ServicesSection() {
   return (
