@@ -34,7 +34,7 @@ export function ServicesSection() {
                 <div className="mt-5 flex gap-3 rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-4">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" aria-hidden="true" />
                   <div>
-                    <p className="text-xs font-bold text-emerald-300">Experiência aplicada</p>
+                    <p className="text-xs font-bold text-emerald-300">Projetos realizados</p>
                     <p className="mt-1 text-sm leading-relaxed text-slate-200">{s.example}</p>
                   </div>
                 </div>
