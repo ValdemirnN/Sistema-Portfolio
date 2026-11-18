@@ -63,7 +63,7 @@ export const METRICS = [
 export const ABOUT = {
   title: 'Quem sou eu',
   paragraphs: [
-    'Sou analista de dados e desenvolvedor de sistemas, formado em Sistemas de Informação pela UFERSA (Angicos/RN). Trabalho com análise de dados, Business Intelligence, automação de processos e desenvolvimento de soluções web e mobile.',
+    'Sou Valdemir Nunes, bacharel em Sistemas de Informação. Crio dashboards em Power BI, automações e plataformas web e mobile sob medida para empresas que querem decidir com dados e parar de perder tempo com tarefas repetitivas.',
     'Meu foco é otimizar processos, aumentar a eficiência operacional e dar suporte à tomada de decisões. Além do trabalho em empresas, desenvolvo plataformas SaaS próprias, já em produção, para gestão empresarial e atendimento clínico.',
   ],
   facts: [
