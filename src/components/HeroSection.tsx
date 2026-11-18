@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, MessageCircle, UserCheck } from 'lucide-react';
-import { HERO, METRICS, PROFILE } from '../data/profile';
+import { HERO, METRICS, PROFILE, whatsappLink } from '../data/profile';
 
 export function HeroSection() {
   const [imgError, setImgError] = useState(false);
@@ -8,7 +8,7 @@ export function HeroSection() {
   return (
     <section
       id="topo"
-      className="relative overflow-hidden border-b border-slate-800/80 bg-[radial-gradient(ellipse_at_top_right,_rgba(37,99,235,0.16),_transparent_55%),linear-gradient(180deg,_#060B16_0%,_#0A1120_100%)]"
+      className="relative overflow-hidden border-b border-slate-800/60"
     >
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
@@ -21,19 +21,19 @@ export function HeroSection() {
 
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">{HERO.text}</p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               <a
                 href="#sistemas"
-                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-500 whitespace-nowrap"
+                className="inline-flex items-center gap-2 justify-center rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-colors hover:bg-blue-500 whitespace-nowrap"
               >
                 Ver sistemas no ar
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href={`https://wa.me/${PROFILE.whatsapp}`}
+                href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-3 text-sm font-semibold text-slate-100 transition-colors hover:border-slate-500 hover:bg-slate-800 whitespace-nowrap"
+                className="inline-flex items-center gap-2 justify-center rounded-lg border border-slate-600 bg-slate-900/60 backdrop-blur px-5 py-3 text-sm font-semibold text-slate-100 transition-colors hover:border-slate-500 hover:bg-slate-800 whitespace-nowrap"
               >
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 Falar no WhatsApp
@@ -42,7 +42,7 @@ export function HeroSection() {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="relative h-full min-h-[380px] overflow-hidden rounded-xl border border-slate-800 bg-[#050C24]">
+            <div className="relative h-full min-h-[380px] overflow-hidden rounded-xl border border-sky-500/20 bg-[#050C24] shadow-[0_0_60px_-15px_rgba(37,99,235,0.55)]">
               {!imgError ? (
                 <img
                   src={PROFILE.photoHero}
@@ -63,7 +63,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 divide-y divide-slate-800 rounded-xl border border-slate-800 bg-[#0B1221] sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 divide-y divide-slate-800 rounded-xl border border-slate-800 bg-[#0B1221]/70 backdrop-blur-sm sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
           {METRICS.map((item) => (
             <div key={item.label} className="p-5 sm:p-6">
               <p className="font-mono text-2xl font-semibold tracking-tight text-sky-400 tabular-nums whitespace-nowrap">{item.value}</p>

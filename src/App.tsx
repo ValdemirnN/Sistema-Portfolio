@@ -6,6 +6,8 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { ServicesSection } from './components/ServicesSection';
+import { TechBackground } from './components/TechBackground';
+import { WhatsAppFloat } from './components/WhatsAppFloat';
 import { StackSection } from './components/StackSection';
 import { SystemsSection } from './components/SystemsSection';
 
@@ -18,7 +20,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060B16] text-slate-100">
+    <div className="relative min-h-screen text-slate-100">
+      <TechBackground />
+      <div className="relative z-10">
       <Header />
       <main>
         <HeroSection />
@@ -30,6 +34,8 @@ export default function App() {
         <ContactSection reference={reference} />
       </main>
       <Footer />
+      </div>
+      <WhatsAppFloat />
     </div>
   );
 }

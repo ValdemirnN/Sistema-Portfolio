@@ -18,6 +18,14 @@ export const PROFILE = {
   photoAbout: '/assets/foto-sobre.jpg',
 };
 
+/** Mensagem que já vai pronta quando o visitante clica em qualquer botão de WhatsApp */
+export const WHATSAPP_MESSAGE =
+  'Olá, Valdemir! Vi seu portfólio e gostaria de conversar sobre um projeto (dashboard, automação ou sistema). Podemos falar?';
+
+export function whatsappLink(text: string = WHATSAPP_MESSAGE): string {
+  return `https://wa.me/${PROFILE.whatsapp}?text=${encodeURIComponent(text)}`;
+}
+
 export const HERO = {
   eyebrow: 'Análise de Dados · Business Intelligence · Sistemas Web e Mobile',
   title: 'Transformo planilhas e processos manuais em dashboards e sistemas que funcionam.',
@@ -300,5 +308,5 @@ export const SERVICE_OPTIONS = [
 
 export const CONTACT = {
   title: 'Vamos conversar sobre o seu projeto',
-  text: 'Conte rapidamente o que você precisa. Ao enviar, a mensagem já abre pronta no seu WhatsApp ou e-mail e eu respondo pessoalmente com a proposta.',
+  text: 'Conte rapidamente o que você precisa. Envie pelo WhatsApp (a mensagem já vai pronta) ou direto para o meu e-mail. Eu respondo pessoalmente com a proposta.',
 };

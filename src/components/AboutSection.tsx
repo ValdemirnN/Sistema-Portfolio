@@ -6,7 +6,7 @@ export function AboutSection() {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <section id="sobre" className="border-b border-slate-800/80 bg-[#060B16] py-16 sm:py-20">
+    <section id="sobre" className="border-b border-slate-800/80 bg-[#060B16]/30 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">

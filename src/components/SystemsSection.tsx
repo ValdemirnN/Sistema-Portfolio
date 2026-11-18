@@ -6,13 +6,13 @@ import { SystemGallery } from './SystemGallery';
 
 export function SystemsSection({ onRequest }: { onRequest: (reference: string) => void }) {
   return (
-    <section id="sistemas" className="border-b border-slate-800/80 bg-[#060B16] py-16 sm:py-20">
+    <section id="sistemas" className="border-b border-slate-800/80 bg-[#060B16]/30 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionTitle eyebrow="03. Sistemas em produção" title={SYSTEMS_INTRO.title} text={SYSTEMS_INTRO.text} />
 
         <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {SYSTEMS.map((s) => (
-            <article key={s.id} className="flex flex-col rounded-xl border border-slate-800 bg-[#0F172A] p-6 transition-colors hover:border-slate-700">
+            <article key={s.id} className="flex flex-col rounded-xl border border-slate-800 bg-[#0F172A]/75 backdrop-blur-sm p-6 transition-colors hover:border-slate-700">
               <SystemGallery name={s.name} shots={getShots(s.id)} />
 
               <div className="flex items-center justify-between gap-3">
@@ -69,7 +69,7 @@ export function SystemsSection({ onRequest }: { onRequest: (reference: string) =
           <h3 className="font-display text-base font-semibold text-white">{INTERNAL_APPS.title}</h3>
           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
             {INTERNAL_APPS.items.map((a) => (
-              <div key={a.name} className="rounded-lg border border-slate-800 bg-[#0F172A] p-4">
+              <div key={a.name} className="rounded-lg border border-slate-800 bg-[#0F172A]/75 backdrop-blur-sm p-4">
                 <p className="font-mono text-sm font-semibold text-sky-400">{a.name}</p>
                 <p className="mt-1 text-xs leading-relaxed text-slate-300">{a.text}</p>
               </div>
