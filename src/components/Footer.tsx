@@ -3,7 +3,7 @@ import { PROFILE, whatsappLink } from '../data/profile';
 export function Footer() {
   return (
     <footer className="border-t border-slate-800 bg-[#060B16]/60 backdrop-blur-sm py-10">
-      <div className="mx-auto flex max-w-6xl flex-col justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-[90rem] flex-col justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6 lg:px-12 2xl:px-16">
         <div>
           <p className="font-display text-sm font-bold text-white">{PROFILE.name}</p>
           <p className="mt-1 text-xs text-slate-400">{PROFILE.role}</p>

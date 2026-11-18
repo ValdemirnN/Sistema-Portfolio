@@ -4,7 +4,7 @@ import { STACK_GROUPS } from '../data/profile';
 export function StackSection() {
   return (
     <section id="stack" className="border-b border-slate-800/80 bg-[#090F1D]/55 py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
         <SectionTitle eyebrow="06. Competências" title="Tecnologias e ferramentas que eu domino" />
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {STACK_GROUPS.map((g) => (

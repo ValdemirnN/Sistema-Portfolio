@@ -9,7 +9,7 @@ const SPANS = ['lg:col-span-4', 'lg:col-span-2', 'lg:col-span-2', 'lg:col-span-4
 export function ServicesSection() {
   return (
     <section id="servicos" className="border-b border-white/10 bg-[#090F1D]/55 py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
         <SectionTitle eyebrow="Serviços" title={SERVICES_INTRO.title} text={SERVICES_INTRO.text} />
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6">

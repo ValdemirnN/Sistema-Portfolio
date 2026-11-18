@@ -11,9 +11,9 @@ export function HeroSection() {
 
   return (
     <section id="topo" className="relative overflow-hidden border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 pb-14 pt-12 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
+      <div className="mx-auto max-w-[90rem] px-4 pb-14 pt-12 sm:px-6 lg:px-12 2xl:px-16 lg:pb-20 lg:pt-20">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-6">
             <p className="inline-flex items-center gap-2.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3.5 py-1.5 text-sm font-medium text-emerald-300">
               <span className="relative flex h-2 w-2">
                 <span className="wa-ping absolute inset-0 rounded-full bg-emerald-400" aria-hidden="true" />
@@ -22,7 +22,7 @@ export function HeroSection() {
               {METRICS[0].value} sistemas meus rodando em produção hoje
             </p>
 
-            <h1 className="mt-6 font-display text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem] [text-wrap:balance]">
+            <h1 className="mt-6 font-display text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.5rem] [text-wrap:balance]">
               <span className="block text-slate-400">{problem}</span>
               <span className="block text-white">em {solution}</span>
             </h1>
@@ -49,33 +49,35 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* retrato + prints reais dos sistemas */}
-          <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
-            <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-blue-600/40 via-cyan-400/10 to-transparent blur-2xl" aria-hidden="true" />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/15 bg-[#050C24] shadow-2xl">
-              {!imgError ? (
-                <img
-                  src={PROFILE.photoHero}
-                  alt={`Retrato de ${PROFILE.fullName}`}
-                  onError={() => setImgError(true)}
-                  className="h-full w-full object-cover object-top"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center bg-slate-900">
-                  <UserCheck className="h-12 w-12 text-blue-400" aria-hidden="true" />
+          {/* retrato + prints reais dos sistemas (ao lado da foto, sem cobri-la) */}
+          <div className="relative mx-auto w-full max-w-md lg:col-span-6 lg:max-w-none">
+            <div className="relative ml-auto w-full sm:w-[60%]">
+              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-blue-600/40 via-cyan-400/10 to-transparent blur-2xl" aria-hidden="true" />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/15 bg-[#050C24] shadow-2xl">
+                {!imgError ? (
+                  <img
+                    src={PROFILE.photoHero}
+                    alt={`Retrato de ${PROFILE.fullName}`}
+                    onError={() => setImgError(true)}
+                    className="h-full w-full object-cover object-top"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center bg-slate-900">
+                    <UserCheck className="h-12 w-12 text-blue-400" aria-hidden="true" />
+                  </div>
+                )}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#060B16] via-[#060B16]/70 to-transparent p-5 pt-16">
+                  <p className="font-display text-sm font-bold text-white">{HERO.captionTitle}</p>
+                  <p className="mt-0.5 text-xs text-slate-300">{HERO.captionSub}</p>
                 </div>
-              )}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#060B16] via-[#060B16]/70 to-transparent p-5 pt-16">
-                <p className="font-display text-sm font-bold text-white">{HERO.captionTitle}</p>
-                <p className="mt-0.5 text-xs text-slate-300">{HERO.captionSub}</p>
               </div>
             </div>
 
-            <figure className="float-slow absolute -left-3 bottom-24 w-[72%] overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] sm:-left-8">
+            <figure className="float-slow absolute left-0 top-6 hidden w-[37%] overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] sm:block">
               <img src={fisioShot} alt="Painel do Fisiopulso" className="w-full" loading="lazy" />
               <figcaption className="bg-slate-900 px-3 py-1.5 text-[11px] font-semibold text-sky-300">Fisiopulso · gestão de clínicas</figcaption>
             </figure>
-            <figure className="float-slow-b absolute -right-2 top-8 hidden w-[46%] overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] sm:block lg:-right-6">
+            <figure className="float-slow-b absolute bottom-16 left-0 hidden w-[37%] overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] sm:block">
               <img src={luzShot} alt="Dashboard do Luz & Letras" className="w-full" loading="lazy" />
               <figcaption className="bg-slate-900 px-3 py-1.5 text-[11px] font-semibold text-sky-300">Luz &amp; Letras</figcaption>
             </figure>

@@ -5,7 +5,7 @@ export function ExperienceSection() {
   return (
     <>
       <section id="trajetoria" className="border-b border-slate-800/80 bg-[#090F1D]/55 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
           <SectionTitle
             eyebrow="04. Trajetória profissional"
             title="Experiência real, aplicada em empresas"
@@ -35,7 +35,7 @@ export function ExperienceSection() {
       </section>
 
       <section id="processo" className="border-b border-slate-800/80 bg-[#060B16]/30 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
           <SectionTitle eyebrow="05. Como funciona" title={PROCESS_INTRO.title} text={PROCESS_INTRO.text} />
           <ol className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {PROCESS.map((step, i) => (

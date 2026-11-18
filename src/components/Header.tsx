@@ -15,7 +15,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-800/90 bg-[#060B16]/70 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-8 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-[90rem] items-center justify-between gap-8 px-4 sm:px-6 lg:px-12 2xl:px-16">
         <a href="#topo" className="font-display text-lg font-bold tracking-tight text-white whitespace-nowrap shrink-0">
           {PROFILE.name}
         </a>

@@ -74,7 +74,7 @@ export function ContactSection({ reference }: { reference: string }) {
 
   return (
     <section id="contato" className="bg-[#060B16]/30 py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
         <div className="grid grid-cols-1 gap-8 rounded-xl border border-slate-800 bg-[#0F172A]/75 backdrop-blur-sm p-6 sm:p-8 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="text-xs font-medium tracking-wide text-sky-400">07. Contato</p>

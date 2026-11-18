@@ -26,7 +26,7 @@ const COMPARISON_ROWS = [
 export function BusinessEvolutionSection() {
   return (
     <section id="evolucao" className="border-b border-slate-800/80 bg-[#060B16] py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
         <div className="max-w-2xl">
           <p className="text-xs font-medium tracking-wide text-sky-400">
             02. Evolução Operacional &amp; Retorno
