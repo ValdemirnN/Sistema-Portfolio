@@ -8,24 +8,24 @@ interface HeroSectionProps {
 
 const PROOF_METRICS = [
   {
-    value: '-68%',
-    label: 'Tempo no fechamento mensal',
-    context: 'Conciliação automática no lugar de planilhas manuais',
+    value: '3',
+    label: 'Sistemas próprios publicados',
+    context: 'Fisiopulso, Luz & Letras e Ritmo Fit, todos em produção',
   },
   {
-    value: '99,4%',
-    label: 'Precisão no faturamento',
-    context: 'Validação prévia de cobranças e retorno bancário',
+    value: '1.000+',
+    label: 'Commits nos repositórios',
+    context: 'Desenvolvimento contínuo e versionado no GitHub',
   },
   {
-    value: '100%',
-    label: 'Dados unificados em SQL',
-    context: 'Base relacional única com controle de acesso por setor',
+    value: 'SQL',
+    label: 'Dados centralizados',
+    context: 'PostgreSQL no Supabase com acesso isolado por empresa (RLS)',
   },
   {
-    value: '24/7',
-    label: 'Operação Vercel + Supabase',
-    context: 'Dashboards rápidos em borda global e PostgreSQL gerenciado',
+    value: 'BI',
+    label: 'Dashboards e automações',
+    context: 'Power BI, Power Query e VBA aplicados na operação',
   },
 ];
 

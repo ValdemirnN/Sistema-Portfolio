@@ -15,6 +15,7 @@ export interface ShowcaseRepository {
   htmlUrl: string;
   homepageUrl?: string;
   isLiveGitHub: boolean;
+  isPrivate?: boolean;
   previewMetrics: {
     label: string;
     value: string;
@@ -42,120 +43,130 @@ export interface GitHubApiRepo {
   archived: boolean;
 }
 
-export const SYSTEM_BLUEPRINTS: ShowcaseRepository[] = [
+export const DEFAULT_GITHUB_USER = 'ValdemirnN';
+
+// Projetos reais em destaque. Repositórios privados não aparecem na API pública do GitHub,
+// por isso os dados deles ficam aqui. Os públicos são atualizados ao vivo (estrelas, data, linguagens, README).
+export const FEATURED_PROJECTS: ShowcaseRepository[] = [
   {
-    id: 'blueprint-faturamento-nfe',
-    name: 'automacao-faturamento-conciliacao',
-    fullName: 'repositorio-modelo/automacao-faturamento-conciliacao',
-    owner: 'repositorio-modelo',
-    title: 'Motor de Faturamento & Conciliação Bancária',
-    category: 'Faturamento',
-    description:
-      'Sistema de emissão automática de cobranças recorrentes, leitura de retornos bancários e conciliação direta com registros financeiros no PostgreSQL.',
-    businessValue: 'Elimina lançamentos manuais de boletos/PIX e reduz inadimplência com régua de cobrança programada.',
-    language: 'TypeScript',
-    topics: ['faturamento', 'conciliacao', 'supabase', 'vercel', 'nf-e'],
-    stars: 24,
-    forks: 6,
-    updatedAt: '2026-10-18T14:20:00Z',
-    htmlUrl: 'https://github.com',
-    isLiveGitHub: false,
-    previewMetrics: [
-      { label: 'Conciliação Automática', value: '99,4%' },
-      { label: 'Tempo de Fechamento', value: '-68%' },
-      { label: 'Latência de Consulta', value: '42 ms' },
-    ],
-    previewWorkflow: [
-      'Importação de pedidos ou contratos ativos',
-      'Geração em lote de faturas e links PIX/Boleto',
-      'Baixa automática via webhook e atualização de DRE',
-    ],
-  },
-  {
-    id: 'blueprint-etl-organizador',
-    name: 'pipeline-organizacao-dados-sql',
-    fullName: 'repositorio-modelo/pipeline-organizacao-dados-sql',
-    owner: 'repositorio-modelo',
-    title: 'Centralizador & Higienização de Planilhas para SQL',
-    category: 'Dados & BI',
-    description:
-      'Conversor de planilhas dispersas (CSV/XLSX) e ERPs legados em tabelas relacionais normalizadas, com validação de CPF/CNPJ e detecção de duplicidades.',
-    businessValue: 'Transforma arquivos despadronizados de múltiplos setores em base única auditável para relatórios gerenciais.',
-    language: 'Python',
-    topics: ['etl', 'pandas', 'postgresql', 'data-quality', 'bi'],
-    stars: 31,
-    forks: 9,
-    updatedAt: '2026-10-04T09:45:00Z',
-    htmlUrl: 'https://github.com',
-    isLiveGitHub: false,
-    previewMetrics: [
-      { label: 'Registros Validados/min', value: '18.500' },
-      { label: 'Duplicidades Removidas', value: '14,2%' },
-      { label: 'Confiabilidade da Base', value: '99,8%' },
-    ],
-    previewWorkflow: [
-      'Upload ou sincronização agendada de planilhas do time',
-      'Padronização de datas, moedas, documentos e categorias',
-      'Carga incremental no Supabase com histórico de versões',
-    ],
-  },
-  {
-    id: 'blueprint-gestao-servicos',
-    name: 'painel-gestao-ordens-sla',
-    fullName: 'repositorio-modelo/painel-gestao-ordens-sla',
-    owner: 'repositorio-modelo',
-    title: 'Painel Gerencial de Ordens de Serviço & SLA',
+    id: 'featured-fisiopulso',
+    name: 'Fisiopulso',
+    fullName: 'ValdemirnN/Fisiopulso',
+    owner: 'ValdemirnN',
+    title: 'Fisiopulso — Gestão para Clínicas de Fisioterapia',
     category: 'Gestão',
     description:
-      'Controle operacional de atendimentos, alocação de técnicos/equipes, cronômetro de SLA e aprovação digital pelo cliente final.',
-    businessValue: 'Dá visibilidade imediata de gargalos na operação e vincula cada serviço concluído direto ao faturamento.',
+      'SaaS multiempresa para fisioterapeutas, clínicas e studios de Pilates: pacientes, prontuários SOAP, agenda integrada, lembretes automatizados, controle financeiro e administração de assinaturas.',
+    businessValue:
+      'Centraliza atendimento, agenda e financeiro da clínica em um único sistema, com dados isolados por empresa.',
     language: 'TypeScript',
-    topics: ['gestao', 'sla', 'operacoes', 'react', 'supabase'],
-    stars: 19,
-    forks: 4,
-    updatedAt: '2026-09-27T18:10:00Z',
-    htmlUrl: 'https://github.com',
+    topics: ['react', 'typescript', 'supabase', 'rls', 'vercel', 'tailwind'],
+    stars: 0,
+    forks: 0,
+    updatedAt: '',
+    htmlUrl: 'https://github.com/ValdemirnN/Fisiopulso',
+    homepageUrl: 'https://fisio-cloud.vercel.app',
     isLiveGitHub: false,
+    isPrivate: true,
     previewMetrics: [
-      { label: 'Cumprimento de SLA', value: '96,1%' },
-      { label: 'Ordens por Operador', value: '+34%' },
-      { label: 'Retrabalho Operacional', value: '-41%' },
+      { label: 'Commits', value: '633' },
+      { label: 'Banco', value: 'PostgreSQL + RLS' },
+      { label: 'Deploy', value: 'Vercel' },
     ],
     previewWorkflow: [
-      'Abertura de chamado com prioridade e prazo automático',
-      'Distribuição inteligente por capacidade da equipe',
-      'Encerramento com checklist e disparo para faturamento',
+      'Cadastro de pacientes e prontuários SOAP',
+      'Agenda integrada com lembretes automatizados',
+      'Controle financeiro e administração de assinaturas',
     ],
   },
   {
-    id: 'blueprint-bi-margem',
-    name: 'dashboard-desempenho-comercial-margem',
-    fullName: 'repositorio-modelo/dashboard-desempenho-comercial-margem',
-    owner: 'repositorio-modelo',
-    title: 'Dashboard Executivo de Margem, Ticket & Metas',
-    category: 'Dados & BI',
+    id: 'featured-luz-letra',
+    name: 'Luz-Letra',
+    fullName: 'ValdemirnN/Luz-Letra',
+    owner: 'ValdemirnN',
+    title: 'Luz & Letras — Gestão para Locadoras de Eventos',
+    category: 'Gestão',
     description:
-      'Painel analítico interativo para diretoria acompanhar receita líquida, margem por produto/serviço, CAC e projeção de caixa em 90 dias.',
-    businessValue: 'Permite decisões semanais baseadas em margem real, não apenas em faturamento bruto.',
-    language: 'TypeScript',
-    topics: ['analytics', 'dashboard', 'kpi', 'margem', 'nextjs'],
-    stars: 28,
-    forks: 7,
-    updatedAt: '2026-09-12T11:30:00Z',
-    htmlUrl: 'https://github.com',
-    isLiveGitHub: false,
+      'SaaS multiempresa para locação de itens para eventos: estoque, agendamentos, orçamentos, recibos em PDF, fluxo de caixa e integrações com Google Calendar, Google Maps e Mercado Pago.',
+    businessValue:
+      'Unifica estoque, agenda e financeiro e automatiza orçamentos e recibos que antes dependiam de planilhas.',
+    language: 'Python',
+    topics: ['python', 'streamlit', 'supabase', 'pandas', 'plotly', 'github-actions'],
+    stars: 0,
+    forks: 0,
+    updatedAt: '',
+    htmlUrl: 'https://github.com/ValdemirnN/Luz-Letra',
+    homepageUrl: 'https://luzeletras.streamlit.app',
+    isLiveGitHub: true,
     previewMetrics: [
-      { label: 'Visibilidade de Margem', value: 'Tempo real' },
-      { label: 'Relatórios Automatizados', value: '12/mês' },
-      { label: 'Economia de Análise', value: '22 h/mês' },
+      { label: 'Commits', value: '363' },
+      { label: 'Stack', value: 'Python + Streamlit' },
+      { label: 'Banco', value: 'Supabase' },
     ],
     previewWorkflow: [
-      'Consolidação diária de vendas, impostos e custos diretos',
-      'Cálculo de margem de contribuição por centro de custo',
-      'Alertas de desvio de meta para gestores',
+      'Controle de estoque e agenda de locações',
+      'Orçamentos e recibos em PDF gerados automaticamente',
+      'Fluxo de caixa com integração Mercado Pago e Google Calendar',
+    ],
+  },
+  {
+    id: 'featured-ritmo-fit',
+    name: 'ritmo-fit',
+    fullName: 'ValdemirnN/ritmo-fit',
+    owner: 'ValdemirnN',
+    title: 'Ritmo Fit — App Multiplataforma',
+    category: 'Gestão',
+    description:
+      'Aplicativo em Flutter (Dart) com versões Android, iOS e web, backend em Supabase e versão web publicada na Vercel.',
+    businessValue:
+      'Mostra como um mesmo código entrega app mobile e web conectados a um banco centralizado.',
+    language: 'Dart',
+    topics: ['flutter', 'dart', 'supabase', 'vercel'],
+    stars: 0,
+    forks: 0,
+    updatedAt: '',
+    htmlUrl: 'https://github.com/ValdemirnN/ritmo-fit',
+    homepageUrl: 'https://meutreino-app-br.vercel.app',
+    isLiveGitHub: true,
+    previewMetrics: [
+      { label: 'Commits', value: '96' },
+      { label: 'Plataformas', value: 'Android · iOS · Web' },
+      { label: 'Banco', value: 'Supabase' },
+    ],
+    previewWorkflow: [
+      'App Flutter com código único para mobile e web',
+      'Dados centralizados no Supabase',
+      'Deploy da versão web na Vercel',
     ],
   },
 ];
+
+// Atualiza com dados reais do GitHub os projetos públicos (estrelas, forks, última atualização).
+export async function enrichFeaturedProjects(
+  projects: ShowcaseRepository[]
+): Promise<ShowcaseRepository[]> {
+  return Promise.all(
+    projects.map(async (p) => {
+      if (p.isPrivate) return p;
+      try {
+        const res = await fetch(`https://api.github.com/repos/${p.fullName}`, {
+          headers: { Accept: 'application/vnd.github+json' },
+        });
+        if (!res.ok) return { ...p, isLiveGitHub: false };
+        const r = (await res.json()) as GitHubApiRepo;
+        return {
+          ...p,
+          stars: r.stargazers_count,
+          forks: r.forks_count,
+          updatedAt: r.updated_at,
+          isLiveGitHub: true,
+        };
+      } catch {
+        return { ...p, isLiveGitHub: false };
+      }
+    })
+  );
+}
 
 function inferCategory(repo: GitHubApiRepo): ShowcaseRepository['category'] {
   const haystack = `${repo.name} ${repo.description ?? ''} ${(repo.topics ?? []).join(' ')}`.toLowerCase();

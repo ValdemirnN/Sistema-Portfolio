@@ -10,8 +10,10 @@ import {
 } from 'lucide-react';
 import {
   fetchGitHubRepoInspectData,
+  DEFAULT_GITHUB_USER,
+  enrichFeaturedProjects,
+  FEATURED_PROJECTS,
   fetchGitHubRepos,
-  SYSTEM_BLUEPRINTS,
   type ShowcaseRepository,
 } from '../lib/github';
 
@@ -20,62 +22,26 @@ interface GitHubShowcaseSectionProps {
 }
 
 const CATEGORIES = ['Todos', 'Faturamento', 'Gestão', 'Dados & BI', 'Automação'] as const;
-const GITHUB_USER_STORAGE_KEY = 'vertice_github_username_v1';
 
-function MiniRepoSparkline({ category }: { category: ShowcaseRepository['category'] }) {
-  const path =
-    category === 'Faturamento'
-      ? 'M 4 36 L 34 30 L 64 26 L 94 18 L 124 14 L 154 8'
-      : category === 'Dados & BI'
-        ? 'M 4 34 L 34 32 L 64 20 L 94 22 L 124 10 L 154 6'
-        : category === 'Automação'
-          ? 'M 4 38 L 34 26 L 64 24 L 94 14 L 124 12 L 154 9'
-          : 'M 4 32 L 34 28 L 64 22 L 94 19 L 124 13 L 154 10';
-
+function StackChips({ topics }: { topics: string[] }) {
   return (
-    <div className="mt-4 rounded-lg border border-slate-800 bg-[#060B16] p-3">
-      <div className="flex items-center justify-between text-[11px] text-slate-400">
-        <span>Prévia de Interface · {category}</span>
-        <span className="font-mono text-sky-400">SQL + Vercel</span>
-      </div>
-      <div className="mt-2.5 flex items-end justify-between gap-4">
-        <div className="grid grid-cols-3 gap-3 text-[11px]">
-          <div>
-            <span className="block text-slate-500">Módulo</span>
-            <span className="font-mono font-medium text-slate-200">{category}</span>
-          </div>
-          <div>
-            <span className="block text-slate-500">Status</span>
-            <span className="font-mono font-medium text-emerald-400">Ativo</span>
-          </div>
-          <div>
-            <span className="block text-slate-500">Base</span>
-            <span className="font-mono font-medium text-slate-200">Supabase</span>
-          </div>
-        </div>
-        <svg viewBox="0 0 158 42" className="h-9 w-28 shrink-0" aria-hidden="true">
-          <path d={path} fill="none" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-      </div>
+    <div className="mt-4 flex flex-wrap gap-1.5">
+      {topics.slice(0, 6).map((t) => (
+        <span
+          key={t}
+          className="rounded-md border border-slate-800 bg-[#060B16] px-2 py-1 font-mono text-[11px] text-sky-400"
+        >
+          {t}
+        </span>
+      ))}
     </div>
   );
 }
 
 export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSectionProps) {
-  const envDefaultUser = (import.meta.env.VITE_GITHUB_USERNAME as string | undefined) || '';
-  const initialUser = useMemo(() => {
-    try {
-      const saved = localStorage.getItem(GITHUB_USER_STORAGE_KEY);
-      if (saved) return saved;
-    } catch {
-      // ignora
-    }
-    return envDefaultUser && !envDefaultUser.includes('seu-usuario') ? envDefaultUser : '';
-  }, [envDefaultUser]);
-
-  const [githubInput, setGithubInput] = useState(initialUser);
-  const [connectedUser, setConnectedUser] = useState(initialUser);
-  const [repos, setRepos] = useState<ShowcaseRepository[]>(SYSTEM_BLUEPRINTS);
+  const [githubInput, setGithubInput] = useState(DEFAULT_GITHUB_USER);
+  const [connectedUser, setConnectedUser] = useState('');
+  const [repos, setRepos] = useState<ShowcaseRepository[]>(FEATURED_PROJECTS);
   const [loadingRepos, setLoadingRepos] = useState(false);
   const [repoError, setRepoError] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<(typeof CATEGORIES)[number]>('Todos');
@@ -88,45 +54,35 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
     languages: { name: string; percentage: number }[];
   } | null>(null);
 
+  const loadFeatured = async () => {
+    setConnectedUser('');
+    setRepoError(null);
+    setRepos(FEATURED_PROJECTS);
+    setRepos(await enrichFeaturedProjects(FEATURED_PROJECTS));
+  };
+
   const loadUserRepos = async (username: string) => {
     const clean = username.trim().replace(/^@/, '');
     if (!clean) {
-      setConnectedUser('');
-      setRepos(SYSTEM_BLUEPRINTS);
-      setRepoError(null);
-      try {
-        localStorage.removeItem(GITHUB_USER_STORAGE_KEY);
-      } catch {
-        // ignora
-      }
+      await loadFeatured();
       return;
     }
-
     setLoadingRepos(true);
     setRepoError(null);
     try {
       const result = await fetchGitHubRepos(clean);
-      setRepos(result.repos.length > 0 ? result.repos : SYSTEM_BLUEPRINTS);
+      setRepos(result.repos.length > 0 ? result.repos : FEATURED_PROJECTS);
       setConnectedUser(clean);
-      try {
-        localStorage.setItem(GITHUB_USER_STORAGE_KEY, clean);
-      } catch {
-        // ignora
-      }
     } catch (err) {
-      setRepoError(
-        err instanceof Error ? err.message : 'Erro ao consultar repositórios do GitHub.'
-      );
+      setRepoError(err instanceof Error ? err.message : 'Erro ao consultar repositórios do GitHub.');
     } finally {
       setLoadingRepos(false);
     }
   };
 
   useEffect(() => {
-    if (initialUser) {
-      void loadUserRepos(initialUser);
-    }
-  }, [initialUser]);
+    void loadFeatured();
+  }, []);
 
   const openPreview = async (repo: ShowcaseRepository) => {
     setSelectedRepo(repo);
@@ -160,10 +116,10 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
               03. Projetos em Repositórios GitHub
             </p>
             <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl [text-wrap:balance]">
-              Pré-visualização interativa de cada repositório do seu GitHub
+              Pré-visualização ao vivo dos sistemas que eu desenvolvi
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
-              Informe seu nome de usuário do GitHub para sincronizar todos os seus repositórios públicos e abrir a prévia de tela, arquitetura e documentação de cada projeto.
+              Sistemas reais, em produção. Abra a prévia ao vivo de cada projeto ou sincronize todos os repositórios públicos do GitHub.
             </p>
           </div>
 
@@ -198,7 +154,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
               ) : (
                 <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
               )}
-              Sincronizar GitHub
+              Ver todos os públicos
             </button>
           </form>
         </div>
@@ -230,17 +186,17 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                 <button
                   type="button"
                   onClick={() => {
-                    setGithubInput('');
-                    void loadUserRepos('');
+                    setGithubInput(DEFAULT_GITHUB_USER);
+                    void loadFeatured();
                   }}
                   className="font-medium text-sky-400 hover:underline cursor-pointer"
                 >
-                  Restaurar modelos base
+                  Voltar aos destaques
                 </button>
               </span>
             ) : (
               <span>
-                4 arquiteturas base exibidas · Conecte seu @usuario acima para listar seus repositórios ao vivo
+                Projetos em destaque · use o campo ao lado para listar todos os repositórios públicos
               </span>
             )}
           </div>
@@ -288,19 +244,27 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                     {repo.description}
                   </p>
 
-                  <MiniRepoSparkline category={repo.category} />
+                  <StackChips topics={repo.topics} />
                 </div>
 
                 <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-4">
                   <div className="flex items-center gap-3 font-mono text-xs text-slate-400 tabular-nums">
-                    <span>{repo.stars} stars</span>
-                    <span aria-hidden="true">·</span>
-                    <span>
-                      {new Date(repo.updatedAt).toLocaleDateString('pt-BR', {
-                        month: 'short',
-                        year: 'numeric',
-                      })}
-                    </span>
+                    {repo.isPrivate ? (
+                      <span>Repositório privado</span>
+                    ) : repo.isLiveGitHub && repo.updatedAt ? (
+                      <>
+                        <span>{repo.stars} stars</span>
+                        <span aria-hidden="true">·</span>
+                        <span>
+                          {new Date(repo.updatedAt).toLocaleDateString('pt-BR', {
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </span>
+                      </>
+                    ) : (
+                      <span>{repo.language}</span>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-3">
@@ -407,7 +371,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                 </button>
               </div>
 
-              {selectedRepo.isLiveGitHub && (
+              {!selectedRepo.isPrivate && (
                 <a
                   href={selectedRepo.htmlUrl}
                   target="_blank"
@@ -427,11 +391,24 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                   <div className="overflow-hidden rounded-xl border border-slate-800 bg-[#060B16]">
                     <div className="flex items-center justify-between border-b border-slate-800 bg-[#0F172A] px-4 py-2.5 text-[11px] text-slate-400">
                       <span className="font-mono truncate">
-                        {selectedRepo.homepageUrl || `https://${selectedRepo.name}.vercel.app`}
+                        {selectedRepo.homepageUrl ?? 'Sem demonstração pública'}
                       </span>
-                      <span className="font-mono text-emerald-400">Produção</span>
+                      <span className="font-mono text-emerald-400">{selectedRepo.homepageUrl ? 'Ao vivo' : 'Privado'}</span>
                     </div>
 
+                    {selectedRepo.homepageUrl && (
+                      <div className="border-b border-slate-800">
+                        <iframe
+                          src={selectedRepo.homepageUrl}
+                          title={`Prévia ao vivo de ${selectedRepo.title}`}
+                          loading="lazy"
+                          className="h-[420px] w-full bg-white"
+                        />
+                        <p className="bg-[#0F172A] px-4 py-2 text-[11px] text-slate-400">
+                          Se a prévia não carregar, abra o sistema em uma nova aba (o link está abaixo).
+                        </p>
+                      </div>
+                    )}
                     <div className="p-5">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                         {selectedRepo.previewMetrics.map((m) => (
@@ -449,7 +426,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
 
                       <div className="mt-4 rounded-lg border border-slate-800 bg-[#0F172A] p-4">
                         <p className="text-xs font-semibold text-white">
-                          Impacto Operacional Entregue
+                          O que o sistema resolve
                         </p>
                         <p className="mt-1 text-xs leading-relaxed text-slate-300">
                           {selectedRepo.businessValue}
@@ -460,7 +437,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
 
                   <div>
                     <h4 className="text-xs font-semibold tracking-wide text-slate-400">
-                      Etapas Automatizadas no Sistema
+                      Principais funcionalidades
                     </h4>
                     <ol className="mt-3 space-y-2.5">
                       {selectedRepo.previewWorkflow.map((step, i) => (
@@ -488,7 +465,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                         rel="noopener noreferrer"
                         className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:underline"
                       >
-                        Abrir URL de demonstração ({selectedRepo.homepageUrl})
+                        Abrir sistema em nova aba
                         <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                       </a>
                     </div>
@@ -541,7 +518,7 @@ export function GitHubShowcaseSection({ onRequestFromRepo }: GitHubShowcaseSecti
                           <p className="mt-2 text-xs leading-relaxed text-slate-400">
                             {selectedRepo.isLiveGitHub
                               ? 'Este repositório não possui um README.md público disponível.'
-                              : 'Arquitetura modelo pronta para implantação. Conecte seu @usuario do GitHub acima para inspecionar o README real dos seus repositórios.'}
+                              : 'Repositório privado: o README e o código não são exibidos publicamente.'}
                           </p>
                         )}
                       </div>
