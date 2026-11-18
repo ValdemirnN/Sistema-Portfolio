@@ -68,6 +68,7 @@ export const ABOUT = {
   ],
   facts: [
     { label: 'Formação', value: 'Bacharelado em Sistemas de Informação, UFERSA – Angicos/RN (concluído em 19/12/2024)' },
+    { label: 'Certificação', value: 'Dart com Flutter, Academia do Flutter (em andamento)' },
     { label: 'Atualmente', value: 'Auxiliar Técnico na Consolis – Soluções Inteligentes' },
     { label: 'Localização', value: 'Assu/RN, atendendo clientes remotamente' },
   ],
@@ -81,8 +82,8 @@ export interface Service {
 }
 
 export const SERVICES_INTRO = {
-  title: 'O que eu faço e o que posso fazer pela sua empresa',
-  text: 'Cada serviço abaixo vem da minha experiência real. Em cada um, deixei um exemplo do que já entreguei.',
+  title: 'O que sua empresa poderia alcançar com as soluções certas?',
+  text: 'Conheça aplicações práticas dos serviços, com projetos desenvolvidos e entregas realizadas em empresas.',
 };
 
 export const SERVICES: Service[] = [
@@ -97,42 +98,24 @@ export const SERVICES: Service[] = [
   {
     title: 'Automação de processos',
     description:
-      'Elimino tarefas manuais e repetitivas: conferências, consolidação de planilhas, leitura de PDFs e rotinas de relatório.',
+      'Elimino tarefas manuais e repetitivas: conferências, consolidação de planilhas, leitura de PDFs, rotinas de relatório e integrações com os serviços que você já usa.',
     example:
-      'Auditoria e conciliação de dados entre SAP e SOLI-OS e processamento automatizado de PDFs para conferência de informações operacionais e de RH.',
-    tags: ['Python', 'VBA', 'Power Query'],
+      'Auditoria e conciliação de dados entre SAP e SOLI-OS, processamento automatizado de PDFs e lembretes automáticos na agenda de uma clínica.',
+    tags: ['Python', 'VBA', 'Power Query', 'APIs'],
   },
   {
     title: 'Sistemas web sob medida',
     description:
-      'Desenvolvo sistemas web para gestão do seu negócio: cadastros, agenda, financeiro, orçamentos, recibos e painéis, com login e dados separados por empresa.',
-    example:
-      'Fisiopulso (gestão de clínicas) e Luz & Letras (gestão de locadoras de eventos), ambos SaaS em produção.',
-    tags: ['React', 'TypeScript', 'Streamlit', 'Supabase'],
+      'Desenvolvo sistemas web para gestão do seu negócio: cadastros, agenda, financeiro, orçamentos, recibos e painéis, com login, banco de dados organizado e dados separados por empresa.',
+    example: 'Fisiopulso e Luz & Letras, dois SaaS próprios em produção (veja logo abaixo).',
+    tags: ['React', 'TypeScript', 'Streamlit', 'Supabase', 'SQL'],
   },
   {
     title: 'Aplicativos mobile',
     description:
       'Crio aplicativos para celular e web para consulta de informações, controle de acesso e gestão do dia a dia da operação.',
-    example:
-      'Consulta+ (consulta de projetos e gestão de treinamentos), MealCheck (controle de acesso ao refeitório) e Ritmo Fit (app Flutter para Android, iOS e web).',
+    example: 'Ritmo Fit (Android, iOS e web), Consulta+ e MealCheck, estes dois usados na operação de uma obra.',
     tags: ['Flutter', 'Dart', 'Kodular'],
-  },
-  {
-    title: 'Banco de dados e organização de dados',
-    description:
-      'Modelo e organizo seus dados em banco SQL, com tratamento, validação e controle de acesso por perfil de usuário.',
-    example:
-      'Bancos PostgreSQL no Supabase com Row-Level Security, isolando os dados de cada empresa nos meus SaaS.',
-    tags: ['SQL', 'PostgreSQL', 'RLS'],
-  },
-  {
-    title: 'Integrações e automação na nuvem',
-    description:
-      'Conecto seu sistema a serviços que você já usa e automatizo rotinas como lembretes, agendas e cobranças.',
-    example:
-      'Integrações com Google Calendar, Google Maps e Mercado Pago no Luz & Letras; lembretes automatizados na agenda do Fisiopulso.',
-    tags: ['APIs', 'Serverless', 'GitHub Actions'],
   },
 ];
 
