@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CheckCircle2, Github, Linkedin, Loader2, Mail, MessageCircle } from 'lucide-react';
+import { CheckCircle2, ClipboardList, Github, Linkedin, Loader2, Mail, MessageCircle, Send } from 'lucide-react';
 import { CONTACT, PROFILE, SERVICE_OPTIONS, whatsappLink } from '../data/profile';
 import { notifyContact, trackClick } from '../lib/notify';
 
@@ -13,9 +13,34 @@ export function ContactSection({ reference }: { reference: string }) {
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
 
+  const [highlight, setHighlight] = useState(false);
+
   useEffect(() => {
     if (reference) setMessage(reference + '. ');
   }, [reference]);
+
+  // Ao chegar aqui por "Solicitar orçamento" (ou qualquer link #contato), destaca o formulário
+  useEffect(() => {
+    let timer: number | undefined;
+    const flash = () => {
+      setHighlight(true);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setHighlight(false), 2800);
+    };
+    const onHash = () => {
+      if (window.location.hash === '#contato') {
+        flash();
+        window.setTimeout(() => document.getElementById('c-name')?.focus({ preventScroll: true }), 700);
+      }
+    };
+    window.addEventListener('hashchange', onHash);
+    window.addEventListener('quote-focus', flash);
+    return () => {
+      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('quote-focus', flash);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   const buildText = () =>
     [
@@ -80,11 +105,27 @@ export function ContactSection({ reference }: { reference: string }) {
       <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
         <div className="grid grid-cols-1 gap-8 rounded-xl border border-slate-800 bg-[#0F172A]/75 backdrop-blur-sm p-6 sm:p-8 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <p className="text-xs font-medium tracking-wide text-sky-400">07. Contato</p>
+            <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-sky-400">
+              <ClipboardList className="h-4 w-4" aria-hidden="true" /> 07. Orçamento
+            </p>
             <h2 className="mt-2 font-display text-2xl font-bold text-white sm:text-3xl [text-wrap:balance]">{CONTACT.title}</h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-300">{CONTACT.text}</p>
 
-            <ul className="mt-6 space-y-3 border-t border-slate-800 pt-5 text-sm text-slate-200">
+            <ol className="mt-6 space-y-3">
+              {[
+                ['Preencha', 'seus dados e o que você precisa'],
+                ['Envie', 'clicando em “Solicitar orçamento”'],
+                ['Receba', 'a proposta no WhatsApp ou e-mail'],
+              ].map(([t, d], i) => (
+                <li key={t} className="flex items-center gap-3 text-sm">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">{i + 1}</span>
+                  <span className="text-slate-300"><b className="text-white">{t}</b> {d}</span>
+                </li>
+              ))}
+            </ol>
+
+            <p className="mt-6 border-t border-slate-800 pt-5 text-xs font-medium uppercase tracking-wide text-slate-500">Ou fale direto comigo</p>
+            <ul className="mt-3 space-y-3 text-sm text-slate-200">
               <li>
                 <a className="inline-flex items-center gap-2.5 hover:text-sky-400" href={whatsappLink()} onClick={() => trackClick('clique-whatsapp', 'Contato (lista)')} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-4 w-4 text-sky-400" aria-hidden="true" /> {PROFILE.phoneDisplay}
@@ -108,19 +149,26 @@ export function ContactSection({ reference }: { reference: string }) {
             </ul>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); void sendRequest(); }} noValidate className="space-y-4 rounded-xl border border-slate-800 bg-[#0B1221]/80 p-5 sm:p-6 lg:col-span-7">
+          <form onSubmit={(e) => { e.preventDefault(); void sendRequest(); }} noValidate className={`space-y-4 rounded-xl border bg-[#0B1221]/80 p-5 transition-all duration-500 sm:p-6 lg:col-span-7 ${highlight ? 'border-blue-500 shadow-[0_0_0_4px_rgba(59,130,246,0.25),0_0_40px_-8px_rgba(59,130,246,0.6)]' : 'border-slate-800'}`}>
             {status === 'sent' ? (
               <div role="status" className="flex min-h-[320px] flex-col items-center justify-center gap-3 text-center">
                 <CheckCircle2 className="h-12 w-12 text-emerald-400" aria-hidden="true" />
-                <p className="font-display text-xl font-bold text-white">Mensagem enviada!</p>
-                <p className="max-w-sm text-sm text-slate-300">Recebi sua solicitação e respondo em breve pelo contato que você informou.</p>
-                <button type="button" onClick={() => { setStatus('idle'); setName(''); setCompany(''); setContact(''); setMessage(''); }} className="mt-2 text-sm font-semibold text-sky-400 hover:underline cursor-pointer">Enviar outra mensagem</button>
+                <p className="font-display text-xl font-bold text-white">Solicitação enviada!</p>
+                <p className="max-w-sm text-sm text-slate-300">Recebi o seu pedido de orçamento e respondo em breve, pelo contato que você informou, com a proposta.</p>
+                <button type="button" onClick={() => { setStatus('idle'); setName(''); setCompany(''); setContact(''); setMessage(''); }} className="mt-2 text-sm font-semibold text-sky-400 hover:underline cursor-pointer">Fazer outra solicitação</button>
               </div>
             ) : (
             <>
+            <div className="flex items-start justify-between gap-3 border-b border-slate-800 pb-4">
+              <div>
+                <p className="font-display text-lg font-bold text-white">Formulário de orçamento</p>
+                <p className="mt-0.5 text-xs text-slate-400">Leva menos de 1 minuto. Campos com <span className="text-sky-400">*</span> são obrigatórios.</p>
+              </div>
+              <span className="shrink-0 rounded-full bg-blue-600/20 px-3 py-1 text-xs font-semibold text-sky-300 ring-1 ring-blue-500/40">Sem compromisso</span>
+            </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="c-name" className="block text-xs font-medium text-slate-300">Seu nome</label>
+                <label htmlFor="c-name" className="block text-xs font-medium text-slate-300">Seu nome <span className="text-sky-400">*</span></label>
                 <input id="c-name" value={name} onChange={(e) => setName(e.target.value)} className={input} placeholder="Como posso te chamar?" />
               </div>
               <div>
@@ -130,8 +178,8 @@ export function ContactSection({ reference }: { reference: string }) {
             </div>
 
             <div>
-              <label htmlFor="c-contact" className="block text-xs font-medium text-slate-300">Seu WhatsApp ou e-mail</label>
-              <input id="c-contact" value={contact} onChange={(e) => setContact(e.target.value)} className={input} placeholder="Para eu te responder" autoComplete="email" inputMode="email" />
+              <label htmlFor="c-contact" className="block text-xs font-medium text-slate-300">Seu WhatsApp ou e-mail <span className="text-sky-400">*</span></label>
+              <input id="c-contact" value={contact} onChange={(e) => setContact(e.target.value)} className={input} placeholder="Para eu te enviar a proposta" autoComplete="email" inputMode="email" />
             </div>
 
             <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -140,7 +188,7 @@ export function ContactSection({ reference }: { reference: string }) {
             </div>
 
             <div>
-              <label htmlFor="c-service" className="block text-xs font-medium text-slate-300">O que você precisa?</label>
+              <label htmlFor="c-service" className="block text-xs font-medium text-slate-300">O que você precisa orçar?</label>
               <select id="c-service" value={service} onChange={(e) => setService(e.target.value)} className={input}>
                 {SERVICE_OPTIONS.map((o) => (
                   <option key={o}>{o}</option>
@@ -149,7 +197,7 @@ export function ContactSection({ reference }: { reference: string }) {
             </div>
 
             <div>
-              <label htmlFor="c-msg" className="block text-xs font-medium text-slate-300">Conte rapidamente sobre o seu cenário</label>
+              <label htmlFor="c-msg" className="block text-xs font-medium text-slate-300">Conte rapidamente sobre o seu projeto</label>
               <textarea
                 id="c-msg"
                 rows={4}
@@ -162,13 +210,16 @@ export function ContactSection({ reference }: { reference: string }) {
 
             {error && <p role="alert" className="text-xs font-medium text-red-400">{error}</p>}
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <button type="button" onClick={sendWhatsApp} className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-500 cursor-pointer">
-                <MessageCircle className="h-4 w-4" aria-hidden="true" /> Enviar pelo WhatsApp
+            <div className="flex flex-col gap-3">
+              <button type="submit" disabled={status === 'sending'} className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4 text-base font-bold text-white shadow-[0_10px_40px_-8px_rgba(59,91,255,0.75)] ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:from-blue-500 hover:to-cyan-500 disabled:opacity-60 cursor-pointer">
+                {status === 'sending' ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" /> : <Send className="h-5 w-5" aria-hidden="true" />}
+                {status === 'sending' ? 'Enviando solicitação...' : 'Solicitar orçamento'}
               </button>
-              <button type="submit" disabled={status === 'sending'} className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-slate-600 bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-sky-400 disabled:opacity-60 cursor-pointer">
-                {status === 'sending' ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Mail className="h-4 w-4" aria-hidden="true" />}
-                {status === 'sending' ? 'Enviando...' : 'Enviar por e-mail'}
+              <div className="flex items-center gap-3 text-xs text-slate-500">
+                <span className="h-px flex-1 bg-slate-800" /> ou <span className="h-px flex-1 bg-slate-800" />
+              </div>
+              <button type="button" onClick={sendWhatsApp} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-emerald-400 cursor-pointer">
+                <MessageCircle className="h-4 w-4 text-emerald-400" aria-hidden="true" /> Prefiro enviar pelo WhatsApp
               </button>
             </div>
             </>

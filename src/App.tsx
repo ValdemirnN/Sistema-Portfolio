@@ -17,6 +17,7 @@ export default function App() {
   const handleRequest = (text: string) => {
     setReference(text);
     document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
+    window.setTimeout(() => window.dispatchEvent(new Event('quote-focus')), 500);
   };
 
   return (

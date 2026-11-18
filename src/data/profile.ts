@@ -307,6 +307,6 @@ export const SERVICE_OPTIONS = [
 ];
 
 export const CONTACT = {
-  title: 'Vamos conversar sobre o seu projeto',
-  text: 'Conte rapidamente o que você precisa. Envie pelo WhatsApp (a mensagem já vai pronta) ou direto para o meu e-mail. Eu respondo pessoalmente com a proposta.',
+  title: 'Solicite o seu orçamento',
+  text: 'Preencha o formulário ao lado e clique em “Solicitar orçamento”. Eu recebo o seu pedido na hora e respondo pessoalmente com a proposta, sem compromisso.',
 };
