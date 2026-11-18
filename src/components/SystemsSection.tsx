@@ -1,10 +1,13 @@
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown, ExternalLink, FileText, Mail, MessageCircle } from 'lucide-react';
 import { SectionTitle } from './SectionTitle';
-import { INTERNAL_APPS, SYSTEMS, SYSTEMS_INTRO } from '../data/profile';
+import { ACQUIRE, INTERNAL_APPS, SYSTEMS, SYSTEMS_INTRO, emailLink, whatsappLink } from '../data/profile';
 import { getShots } from '../data/systemShots';
 import { SystemGallery } from './SystemGallery';
 
 export function SystemsSection({ onRequest }: { onRequest: (reference: string) => void }) {
+  const [openId, setOpenId] = useState<string | null>(null);
+
   return (
     <section id="sistemas" className="border-b border-white/10 bg-[#060B16]/30 py-20 sm:py-24">
       <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-12 2xl:px-16">
@@ -62,13 +65,53 @@ export function SystemsSection({ onRequest }: { onRequest: (reference: string) =
                     </a>
                     <button
                       type="button"
-                      onClick={() => onRequest(`Quero um sistema parecido com o ${s.name}`)}
+                      onClick={() => setOpenId(openId === s.id ? null : s.id)}
+                      aria-expanded={openId === s.id}
+                      aria-controls={`adquirir-${s.id}`}
                       className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10 cursor-pointer"
                     >
-                      Quero algo parecido
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      {ACQUIRE.button}
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${openId === s.id ? 'rotate-180' : ''}`}
+                        aria-hidden="true"
+                      />
                     </button>
                   </div>
+
+                  {openId === s.id && (
+                    <div
+                      id={`adquirir-${s.id}`}
+                      className="mt-4 rounded-2xl border border-white/10 bg-[#0B1221]/90 p-4"
+                    >
+                      <p className="text-sm font-semibold text-slate-200">{ACQUIRE.panelTitle}</p>
+                      <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+                        <a
+                          href={whatsappLink(ACQUIRE.whatsappMessage(s.name))}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-bold text-white transition hover:bg-emerald-400"
+                        >
+                          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                          {ACQUIRE.whatsappLabel}
+                        </a>
+                        <a
+                          href={emailLink(ACQUIRE.emailSubject(s.name), ACQUIRE.emailBody(s.name, s.tagline))}
+                          className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+                        >
+                          <Mail className="h-4 w-4" aria-hidden="true" />
+                          {ACQUIRE.emailLabel}
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => onRequest(ACQUIRE.formReference(s.name))}
+                          className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10 cursor-pointer"
+                        >
+                          <FileText className="h-4 w-4" aria-hidden="true" />
+                          {ACQUIRE.formLabel}
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </article>
             );
