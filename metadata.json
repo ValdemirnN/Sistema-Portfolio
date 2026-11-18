@@ -1,0 +1,6 @@
+{
+  "name": "Vértice Sistemas — Dashboards & Automação",
+  "description": "Central de dashboards de desempenho, organização de dados e automação de faturamento com portfólio conectado ao GitHub, arquitetura Vercel e Supabase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
