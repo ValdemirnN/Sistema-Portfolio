@@ -90,7 +90,7 @@ export const SERVICES: Service[] = [
   {
     title: 'Dashboards e Business Intelligence',
     description:
-      'Reúno seus dados dispersos e transformo em painéis claros de indicadores, produtividade, faturamento e acompanhamento de documentos.',
+      'Dados dispersos reunidos e transformados em painéis inteligentes de indicadores, produtividade, faturamento e acompanhamento de documentos.',
     example:
       'Dashboards em Power BI para indicadores, produtividade e faturamento (Consolis) e para rastreabilidade documental (Consórcio Sol de Assu).',
     tags: ['Power BI', 'Power Query', 'Excel avançado'],
@@ -98,7 +98,7 @@ export const SERVICES: Service[] = [
   {
     title: 'Automação de processos',
     description:
-      'Elimino tarefas manuais e repetitivas: conferências, consolidação de planilhas, leitura de PDFs, rotinas de relatório e integrações com os serviços que você já usa.',
+      'Tarefas manuais e repetitivas eliminadas: conferências, consolidação de planilhas, leitura de PDFs, rotinas de relatório e integrações com os serviços que a empresa já usa.',
     example:
       'Auditoria e conciliação de dados entre SAP e SOLI-OS, processamento automatizado de PDFs e lembretes automáticos na agenda de uma clínica.',
     tags: ['Python', 'VBA', 'Power Query', 'APIs'],
@@ -106,14 +106,14 @@ export const SERVICES: Service[] = [
   {
     title: 'Sistemas web sob medida',
     description:
-      'Desenvolvo sistemas web para gestão do seu negócio: cadastros, agenda, financeiro, orçamentos, recibos e painéis, com login, banco de dados organizado e dados separados por empresa.',
+      'Sistemas web para gestão do negócio: cadastros, agenda, financeiro, orçamentos, recibos e painéis, com login, banco de dados organizado e dados separados por empresa.',
     example: 'Fisiopulso e Luz & Letras, dois SaaS próprios em produção (veja logo abaixo).',
     tags: ['React', 'TypeScript', 'Streamlit', 'Supabase', 'SQL'],
   },
   {
     title: 'Aplicativos mobile',
     description:
-      'Crio aplicativos para celular e web para consulta de informações, controle de acesso e gestão do dia a dia da operação.',
+      'Aplicativos para celular e web para consulta de informações, controle de acesso e gestão do dia a dia da operação.',
     example: 'Ritmo Fit (Android, iOS e web), Consulta+ e MealCheck, estes dois usados na operação de uma obra.',
     tags: ['Flutter', 'Dart', 'Kodular'],
   },
