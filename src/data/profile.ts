@@ -27,10 +27,12 @@ export function whatsappLink(text: string = WHATSAPP_MESSAGE): string {
 }
 
 export const HERO = {
-  eyebrow: 'Análise de Dados · Business Intelligence · Sistemas Web e Mobile',
-  title: 'Transformo planilhas e processos manuais em dashboards e sistemas que funcionam.',
-  text:
-    'Sou Valdemir Nunes, bacharel em Sistemas de Informação. Crio dashboards em Power BI, automações e plataformas web e mobile sob medida para empresas que querem decidir com dados e parar de perder tempo com tarefas repetitivas.',
+  badge: 'Tecnologia aplicada a negócios',
+  titleLead: 'Sua empresa pode estar perdendo oportunidades',
+  titleHighlight: 'que os dados já conseguem revelar.',
+  text: 'Transformamos informações, processos e tecnologia em soluções inteligentes para o seu negócio.',
+  cta: 'Descubra o que podemos construir',
+  tags: 'Análise de dados · Automação · Sistemas · Inteligência de negócios',
   captionTitle: 'Analista de Dados & Desenvolvedor de Sistemas',
   captionSub: 'Power BI · SQL · React · Flutter · Supabase',
 };

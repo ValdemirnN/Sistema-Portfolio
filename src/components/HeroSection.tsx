@@ -1,52 +1,48 @@
 import { useState } from 'react';
-import { ArrowRight, MessageCircle, UserCheck } from 'lucide-react';
+import { ArrowUpRight, MessageCircle, UserCheck } from 'lucide-react';
 import { HERO, METRICS, PROFILE, whatsappLink } from '../data/profile';
 import { trackClick } from '../lib/notify';
 
 export function HeroSection() {
   const [imgError, setImgError] = useState(false);
-  // "Transformo planilhas e processos manuais" / "em dashboards e sistemas que funcionam."
-  const [problem, solution] = HERO.title.split(' em ');
 
   return (
     <section id="topo" className="relative overflow-hidden border-b border-white/10">
       <div className="mx-auto max-w-[90rem] px-4 pb-14 pt-12 sm:px-6 lg:px-12 2xl:px-16 lg:pb-20 lg:pt-20">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-6">
-            <p className="inline-flex items-center gap-2.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3.5 py-1.5 text-sm font-medium text-emerald-300">
-              <span className="relative flex h-2 w-2">
-                <span className="wa-ping absolute inset-0 rounded-full bg-emerald-400" aria-hidden="true" />
-                <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-              {METRICS[0].value} sistemas meus rodando em produção hoje
+            <p className="inline-flex items-center rounded-full border border-blue-400/20 bg-blue-500/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-blue-400 sm:text-sm">
+              {HERO.badge}
             </p>
 
-            <h1 className="mt-6 font-display text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.5rem] [text-wrap:balance]">
-              <span className="block text-slate-400">{problem}</span>
-              <span className="block text-white">em {solution}</span>
+            <h1 className="mt-6 font-display text-[2.25rem] font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem] 2xl:text-[4rem] [text-wrap:balance]">
+              <span className="block text-slate-400">{HERO.titleLead}</span>
+              <span className="block text-white">{HERO.titleHighlight}</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300">{HERO.text}</p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
+                href="#sistemas"
+                className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-4 text-base font-bold text-white shadow-[0_10px_40px_-8px_rgba(59,91,255,0.75)] ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:from-blue-500 hover:to-cyan-500"
+              >
+                {HERO.cta}
+                <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
+              </a>
+              <a
                 href={whatsappLink()}
                 onClick={() => trackClick('clique-whatsapp', 'Hero')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-4 text-base font-bold text-white shadow-[0_10px_40px_-8px_rgba(59,91,255,0.75)] ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:from-blue-500 hover:to-cyan-500 whitespace-nowrap"
-              >
-                <MessageCircle className="h-5 w-5" aria-hidden="true" />
-                Pedir orçamento no WhatsApp
-              </a>
-              <a
-                href="#sistemas"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-4 text-base font-semibold text-white backdrop-blur transition hover:border-white/40 hover:bg-white/10 whitespace-nowrap"
               >
-                Ver os sistemas no ar
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <MessageCircle className="h-4 w-4 text-emerald-400" aria-hidden="true" />
+                Pedir orçamento no WhatsApp
               </a>
             </div>
+
+            <p className="mt-6 max-w-xl text-xs font-medium uppercase leading-relaxed tracking-wide text-slate-400">{HERO.tags}</p>
           </div>
 
           {/* retrato */}
