@@ -1,6 +1,8 @@
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { SectionTitle } from './SectionTitle';
 import { INTERNAL_APPS, SYSTEMS, SYSTEMS_INTRO } from '../data/profile';
+import { getShots } from '../data/systemShots';
+import { SystemGallery } from './SystemGallery';
 
 export function SystemsSection({ onRequest }: { onRequest: (reference: string) => void }) {
   return (
@@ -11,6 +13,8 @@ export function SystemsSection({ onRequest }: { onRequest: (reference: string) =
         <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {SYSTEMS.map((s) => (
             <article key={s.id} className="flex flex-col rounded-xl border border-slate-800 bg-[#0F172A] p-6 transition-colors hover:border-slate-700">
+              <SystemGallery name={s.name} shots={getShots(s.id)} />
+
               <div className="flex items-center justify-between gap-3">
                 <span className="text-xs font-medium text-sky-400">{s.category}</span>
                 <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-400">

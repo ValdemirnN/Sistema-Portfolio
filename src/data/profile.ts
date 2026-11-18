@@ -141,7 +141,7 @@ export interface SystemProject {
 
 export const SYSTEMS_INTRO = {
   title: 'Sistemas que eu desenvolvi e que estão no ar',
-  text: 'São produtos reais, criados por mim do zero. Abra cada um e veja funcionando.',
+  text: 'São produtos reais, criados por mim do zero. Veja as telas de cada um e abra o sistema para vê-lo funcionando.',
 };
 
 export const SYSTEMS: SystemProject[] = [

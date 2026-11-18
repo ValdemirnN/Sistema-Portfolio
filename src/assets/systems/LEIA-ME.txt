@@ -1,0 +1,10 @@
+Coloque aqui os prints de cada sistema, na pasta correspondente:
+
+  fisiopulso/   luz-letras/   ritmo-fit/
+
+- Formatos: png, jpg, jpeg ou webp
+- A ordem segue o nome do arquivo; a legenda sai do nome:
+    01-agenda-de-pacientes.png  ->  "Agenda de pacientes"
+- Recomendado: 3 a 5 imagens por sistema, ~1600px de largura (desktop)
+  ou ~900px de largura (celular). Evite dados reais de pacientes/clientes.
+- Nenhum código precisa ser alterado. Pasta vazia = card sem galeria.
