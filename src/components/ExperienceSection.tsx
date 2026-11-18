@@ -37,12 +37,17 @@ export function ExperienceSection() {
       <section id="processo" className="border-b border-slate-800/80 bg-[#060B16]/30 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <SectionTitle eyebrow="05. Como funciona" title={PROCESS_INTRO.title} text={PROCESS_INTRO.text} />
-          <ol className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <ol className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {PROCESS.map((step, i) => (
-              <li key={step.title} className="rounded-xl border border-slate-800 bg-[#0F172A]/75 backdrop-blur-sm p-5">
-                <p className="font-mono text-xs font-semibold text-sky-400">0{i + 1}.</p>
-                <h3 className="mt-2 font-display text-base font-semibold text-white">{step.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-slate-300">{step.detail}</p>
+              <li key={step.title} className="relative">
+                {i < PROCESS.length - 1 && (
+                  <span className="absolute left-14 top-6 hidden h-px w-[calc(100%-2rem)] bg-gradient-to-r from-blue-500/60 to-transparent lg:block" aria-hidden="true" />
+                )}
+                <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 font-display text-lg font-extrabold text-white shadow-lg shadow-blue-600/30">
+                  {i + 1}
+                </span>
+                <h3 className="mt-5 font-display text-lg font-bold text-white">{step.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-slate-300">{step.detail}</p>
               </li>
             ))}
           </ol>
