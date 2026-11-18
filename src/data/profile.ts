@@ -26,6 +26,26 @@ export function whatsappLink(text: string = WHATSAPP_MESSAGE): string {
   return `https://wa.me/${PROFILE.whatsapp}?text=${encodeURIComponent(text)}`;
 }
 
+/** Link de e-mail já com assunto e mensagem preenchidos */
+export function emailLink(subject: string, body: string): string {
+  return `mailto:${PROFILE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+/** Textos do botão "Quero adquirir" dos sistemas. Edite aqui para mudar as mensagens. */
+export const ACQUIRE = {
+  button: 'Quero adquirir',
+  panelTitle: 'Como você prefere falar comigo?',
+  whatsappLabel: 'WhatsApp',
+  emailLabel: 'E-mail',
+  formLabel: 'Formulário',
+  whatsappMessage: (name: string) =>
+    `Olá, Valdemir! Vi o ${name} no seu portfólio e tenho interesse em adquirir esse sistema para o meu negócio. Pode me passar mais informações sobre valores, o que está incluso e prazo de implantação?`,
+  emailSubject: (name: string) => `Interesse em adquirir o ${name}`,
+  emailBody: (name: string, tagline: string) =>
+    `Olá, Valdemir!\n\nVi o ${name} (${tagline.toLowerCase()}) no seu portfólio e tenho interesse em adquirir esse sistema.\n\nMeu nome:\nMinha empresa:\nSegmento de atuação:\nWhatsApp para contato:\n\nPode me enviar informações sobre valores, o que está incluso e prazo de implantação?\n\nObrigado!`,
+  formReference: (name: string) => `Tenho interesse em adquirir o ${name}`,
+};
+
 export const HERO = {
   badge: 'Tecnologia aplicada a negócios',
   titleLead: 'Sua empresa pode estar perdendo oportunidades',
