@@ -1,4 +1,5 @@
 import { PROFILE, whatsappLink } from '../data/profile';
+import { trackClick } from '../lib/notify';
 
 export function Footer() {
   return (
@@ -8,9 +9,9 @@ export function Footer() {
           <p className="font-display text-sm font-bold text-white">{PROFILE.name}</p>
           <p className="mt-1 text-xs text-slate-400">{PROFILE.role}</p>
           <p className="mt-1 text-xs text-slate-400">
-            <a href={`mailto:${PROFILE.email}`} className="hover:text-white">{PROFILE.email}</a>
+            <a href={`mailto:${PROFILE.email}`} onClick={() => trackClick('clique-email', 'Rodapé')} className="hover:text-white">{PROFILE.email}</a>
             {' · '}
-            <a href={whatsappLink()} className="hover:text-white">{PROFILE.phoneDisplay}</a>
+            <a href={whatsappLink()} onClick={() => trackClick('clique-whatsapp', 'Rodapé')} className="hover:text-white">{PROFILE.phoneDisplay}</a>
             {' · '}
             <a href={PROFILE.linkedin} className="hover:text-white">LinkedIn</a>
             {' · '}

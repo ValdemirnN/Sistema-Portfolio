@@ -6,6 +6,7 @@ import {
   submitSolutionRequest,
   type SolutionRequestRecord,
 } from '../lib/supabase';
+import { notifyContact } from '../lib/notify';
 
 export interface PreselectedQuoteContext {
   solutionType: 'pronta' | 'personalizada' | 'repositorio';
@@ -121,6 +122,18 @@ export function SolutionsAndQuoteSection({
       setFormError(result.error);
       return;
     }
+
+    // além de salvar, avisa você por e-mail/Telegram
+    void notifyContact({
+      source: 'orcamento-solucoes',
+      name: clientName,
+      company: companyName,
+      contact: contactChannel,
+      service: `${solutionType}${referenceProject ? ' - ' + referenceProject : ''}`,
+      message: [`Nicho: ${niche}`, monthlyVolume ? `Volume mensal: ${monthlyVolume}` : '', notes ? `Obs: ${notes}` : '']
+        .filter(Boolean)
+        .join('\n'),
+    });
 
     setSubmittedRecord(result.record);
     setRecentHistory(getLocalSolutionRequests());

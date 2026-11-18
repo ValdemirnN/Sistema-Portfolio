@@ -1,10 +1,12 @@
 import { MessageCircle } from 'lucide-react';
 import { whatsappLink } from '../data/profile';
+import { trackClick } from '../lib/notify';
 
 export function WhatsAppFloat() {
   return (
     <a
       href={whatsappLink()}
+      onClick={() => trackClick('clique-whatsapp', 'Botão flutuante')}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar com Valdemir no WhatsApp"

@@ -15,3 +15,7 @@ create table if not exists public.contact_messages (
 -- RLS ligado e SEM policy pública: ninguém lê/escreve pelo navegador.
 -- Só a função /api/contact (service_role, no servidor) grava, e você lê pelo painel.
 alter table public.contact_messages enable row level security;
+
+
+-- Origem do contato (formulário, orçamento, cliques). Rode também se a tabela já existia.
+alter table public.contact_messages add column if not exists source text not null default 'formulario-email';

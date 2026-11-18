@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, MessageCircle, UserCheck } from 'lucide-react';
 import { HERO, METRICS, PROFILE, whatsappLink } from '../data/profile';
+import { trackClick } from '../lib/notify';
 
 export function HeroSection() {
   const [imgError, setImgError] = useState(false);
@@ -30,6 +31,7 @@ export function HeroSection() {
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
                 href={whatsappLink()}
+                onClick={() => trackClick('clique-whatsapp', 'Hero')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-4 text-base font-bold text-white shadow-[0_10px_40px_-8px_rgba(59,91,255,0.75)] ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:from-blue-500 hover:to-cyan-500 whitespace-nowrap"

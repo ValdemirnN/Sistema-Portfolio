@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle2, Github, Linkedin, Loader2, Mail, MessageCircle } from 'lucide-react';
 import { CONTACT, PROFILE, SERVICE_OPTIONS, whatsappLink } from '../data/profile';
+import { notifyContact, trackClick } from '../lib/notify';
 
 export function ContactSection({ reference }: { reference: string }) {
   const [name, setName] = useState('');
@@ -40,6 +41,8 @@ export function ContactSection({ reference }: { reference: string }) {
 
   const sendWhatsApp = () => {
     if (!validate()) return;
+    // avisa você mesmo que a pessoa desista de enviar no WhatsApp
+    void notifyContact({ source: 'formulario-whatsapp', name, company, contact, service, message });
     window.open(whatsappLink(buildText()), '_blank', 'noopener');
   };
 
@@ -55,7 +58,7 @@ export function ContactSection({ reference }: { reference: string }) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, company, contact, service, message, website }),
+        body: JSON.stringify({ source: 'formulario-email', name, company, contact, service, message, website }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error || 'Falha ao enviar.');
@@ -83,12 +86,12 @@ export function ContactSection({ reference }: { reference: string }) {
 
             <ul className="mt-6 space-y-3 border-t border-slate-800 pt-5 text-sm text-slate-200">
               <li>
-                <a className="inline-flex items-center gap-2.5 hover:text-sky-400" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+                <a className="inline-flex items-center gap-2.5 hover:text-sky-400" href={whatsappLink()} onClick={() => trackClick('clique-whatsapp', 'Contato (lista)')} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-4 w-4 text-sky-400" aria-hidden="true" /> {PROFILE.phoneDisplay}
                 </a>
               </li>
               <li>
-                <a className="inline-flex items-center gap-2.5 hover:text-sky-400" href={`mailto:${PROFILE.email}`}>
+                <a className="inline-flex items-center gap-2.5 hover:text-sky-400" href={`mailto:${PROFILE.email}`} onClick={() => trackClick('clique-email', 'Contato (lista)')}>
                   <Mail className="h-4 w-4 text-sky-400" aria-hidden="true" /> {PROFILE.email}
                 </a>
               </li>
