@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, MessageCircle, UserCheck } from 'lucide-react';
 import { HERO, METRICS, PROFILE, whatsappLink } from '../data/profile';
-import fisioShot from '../assets/systems/fisiopulso/01-painel-da-clinica.png';
-import luzShot from '../assets/systems/luz-letras/01-dashboard-do-negocio.png';
 
 export function HeroSection() {
   const [imgError, setImgError] = useState(false);
@@ -49,9 +47,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* retrato + prints reais dos sistemas (ao lado da foto, sem cobri-la) */}
-          <div className="relative mx-auto w-full max-w-md lg:col-span-6 lg:max-w-none">
-            <div className="relative ml-auto w-full sm:w-[60%]">
+          {/* retrato */}
+          <div className="relative mx-auto w-full max-w-lg lg:col-span-6 lg:max-w-[40rem]">
+            <div className="relative mx-auto w-full">
               <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-blue-600/40 via-cyan-400/10 to-transparent blur-2xl" aria-hidden="true" />
               <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/15 bg-[#050C24] shadow-2xl">
                 {!imgError ? (
@@ -72,15 +70,6 @@ export function HeroSection() {
                 </div>
               </div>
             </div>
-
-            <figure className="float-slow absolute left-0 top-6 hidden w-[37%] overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] sm:block">
-              <img src={fisioShot} alt="Painel do Fisiopulso" className="w-full" loading="lazy" />
-              <figcaption className="bg-slate-900 px-3 py-1.5 text-[11px] font-semibold text-sky-300">Fisiopulso · gestão de clínicas</figcaption>
-            </figure>
-            <figure className="float-slow-b absolute bottom-16 left-0 hidden w-[37%] overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] sm:block">
-              <img src={luzShot} alt="Dashboard do Luz & Letras" className="w-full" loading="lazy" />
-              <figcaption className="bg-slate-900 px-3 py-1.5 text-[11px] font-semibold text-sky-300">Luz &amp; Letras</figcaption>
-            </figure>
           </div>
         </div>
 
