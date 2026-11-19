@@ -147,6 +147,20 @@ export interface SystemProject {
   stack: string[];
   liveUrl: string;
   liveLabel: string;
+  /** Depoimento opcional do cliente (aparece abaixo do card do sistema). */
+  testimonial?: Testimonial;
+}
+
+export interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  /** Legendas das fotos; as imagens ficam em src/assets/testimonials/<id>/antes.jpg e depois.jpg */
+  beforeLabel: string;
+  afterLabel: string;
+  /** Resultado em destaque (ex.: "100%" + "digitalizado"). */
+  metric: { value: string; label: string };
+  source: string;
 }
 
 export const SYSTEMS_INTRO = {
@@ -186,6 +200,15 @@ export const SYSTEMS: SystemProject[] = [
     stack: ['Python', 'Streamlit', 'Supabase (PostgreSQL)', 'Pandas', 'Plotly', 'GitHub Actions'],
     liveUrl: 'https://luzeletras.streamlit.app',
     liveLabel: 'Abrir Luz & Letras',
+    testimonial: {
+      quote: 'Mudou completamente a forma de trabalho, o tempo e organização ficou muito melhor.',
+      author: 'Luz e Letras',
+      role: 'Locadora de materiais para eventos',
+      beforeLabel: 'Antes: estoque e agenda em cadernos',
+      afterLabel: 'Hoje: tudo no dashboard',
+      metric: { value: '100%', label: 'do estoque e da agenda digitalizados' },
+      source: 'Feedback enviado espontaneamente pela cliente via WhatsApp, com fotos reais do dia a dia.',
+    },
   },
   {
     id: 'ritmo-fit',

@@ -3,7 +3,9 @@ import { ChevronDown, ExternalLink, FileText, Mail, MessageCircle } from 'lucide
 import { SectionTitle } from './SectionTitle';
 import { ACQUIRE, INTERNAL_APPS, SYSTEMS, SYSTEMS_INTRO, emailLink, whatsappLink } from '../data/profile';
 import { getShots } from '../data/systemShots';
+import { getTestimonialShots } from '../data/testimonialShots';
 import { SystemGallery } from './SystemGallery';
+import { TestimonialBlock } from './TestimonialBlock';
 
 export function SystemsSection({ onRequest }: { onRequest: (reference: string) => void }) {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -113,6 +115,14 @@ export function SystemsSection({ onRequest }: { onRequest: (reference: string) =
                     </div>
                   )}
                 </div>
+
+                {s.testimonial && (
+                  <TestimonialBlock
+                    systemName={s.name}
+                    testimonial={s.testimonial}
+                    {...getTestimonialShots(s.id)}
+                  />
+                )}
               </article>
             );
           })}
