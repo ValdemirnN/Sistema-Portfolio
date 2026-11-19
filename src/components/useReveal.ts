@@ -51,8 +51,11 @@ export function useInViewLive<T extends Element>(threshold = 0.3) {
   return [ref, visible] as const;
 }
 
-/** Conta de 0 até `target` quando `run` vira `true`. */
-export function useCountUp(target: number, run: boolean, ms = 1400) {
+/**
+ * Conta de 0 até `target` quando `run` vira `true`.
+ * Com `loopHoldMs`, depois de chegar ao valor espera esse tempo e recomeça do zero, em loop.
+ */
+export function useCountUp(target: number, run: boolean, ms = 1400, loopHoldMs = 0) {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -62,15 +65,23 @@ export function useCountUp(target: number, run: boolean, ms = 1400) {
       return;
     }
     let raf = 0;
-    const t0 = performance.now();
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - t0) / ms);
-      setValue(Math.round(target * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
+    let timer = 0;
+    const play = () => {
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - t0) / ms);
+        setValue(Math.round(target * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) raf = requestAnimationFrame(tick);
+        else if (loopHoldMs > 0) timer = window.setTimeout(play, loopHoldMs);
+      };
+      raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [target, run, ms]);
+    play();
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
+    };
+  }, [target, run, ms, loopHoldMs]);
 
   return value;
 }

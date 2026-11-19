@@ -5,7 +5,10 @@ import type { TestimonialShots } from '../data/testimonialShots';
 import { BeforeAfterSlider } from './BeforeAfterSlider';
 import { ChatReplay } from './ChatReplay';
 import { ImageLightbox, type LightboxItem } from './ImageLightbox';
-import { useCountUp, useInView } from './useReveal';
+import { useCountUp, useInViewLive } from './useReveal';
+
+/** Quanto tempo o número fica parado no valor final antes de recontar. */
+const METRIC_HOLD_MS = 8000;
 
 interface Props extends TestimonialShots {
   systemName: string;
@@ -16,10 +19,11 @@ interface Props extends TestimonialShots {
 export function TestimonialBlock({ systemName, testimonial: t, before, after, printTop, printBottom }: Props) {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const closeLightbox = useCallback(() => setLightbox(null), []);
-  const [metricRef, metricSeen] = useInView<HTMLDivElement>(0.5);
+  const [metricRef, metricSeen] = useInViewLive<HTMLDivElement>(0.5);
 
   const metricMatch = /^(\d+)(.*)$/.exec(t.metric.value);
-  const counted = useCountUp(metricMatch ? Number(metricMatch[1]) : 0, metricSeen);
+  // conta até o valor, fica parado e recomeça (loop), só enquanto o card está na tela
+  const counted = useCountUp(metricMatch ? Number(metricMatch[1]) : 0, metricSeen, 2200, METRIC_HOLD_MS);
   const metricText = metricMatch ? `${counted}${metricMatch[2]}` : t.metric.value;
 
   // galeria do visualizador (só entra o que existe)
