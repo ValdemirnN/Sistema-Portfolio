@@ -11,26 +11,47 @@ interface Props {
   onExpand?: () => void;
 }
 
+/** Tempo que cada lado fica parado na tela antes de a animação trocar para o outro. */
+const HOLD_MS = 5000;
+/** Duração do deslizar automático de um lado ao outro. */
+const SWEEP_MS = 2000;
+/** Depois que a pessoa mexe no comparador, a animação só volta após esse tempo parada. */
+const RESUME_AFTER_MS = 9000;
+/** Posições do divisor no autoplay (% mostrando "Antes"). */
+const AUTO_BEFORE = 84;
+const AUTO_AFTER = 16;
+
 /** Comparador arrastável: a foto "Antes" é revelada sobre a "Depois". */
 export function BeforeAfterSlider({ before, after, beforeLabel, afterLabel, systemName, onExpand }: Props) {
   const [ref, inView] = useInView<HTMLDivElement>(0.4);
   const [pos, setPos] = useState(50); // % da largura mostrando "Antes"
   const [dragging, setDragging] = useState(false);
   const [touched, setTouched] = useState(false);
+  const [auto, setAuto] = useState(false); // true enquanto o deslizar é automático (transição mais lenta)
+  const [interactions, setInteractions] = useState(0);
 
-  // demonstração automática uma vez, para a cliente perceber que dá para arrastar
+  const markInteraction = () => {
+    setTouched(true);
+    setAuto(false);
+    setInteractions((n) => n + 1);
+  };
+
+  // autoplay em loop: alterna Antes <-> Depois com pausa longa em cada lado.
+  // Pausa se a seção sai da tela ou a pessoa está arrastando; retoma após RESUME_AFTER_MS sem interação.
   useEffect(() => {
-    if (!inView || touched || prefersReducedMotion()) return;
-    const timers = [
-      window.setTimeout(() => setPos(88), 500),
-      window.setTimeout(() => setPos(12), 1500),
-      window.setTimeout(() => setPos(50), 2500),
-    ];
-    return () => timers.forEach(window.clearTimeout);
-  }, [inView, touched]);
+    if (!inView || dragging || prefersReducedMotion()) return;
+    let timer: number;
+    const step = () => {
+      setAuto(true);
+      setPos((p) => (p >= 50 ? AUTO_AFTER : AUTO_BEFORE));
+      timer = window.setTimeout(step, SWEEP_MS + HOLD_MS);
+    };
+    timer = window.setTimeout(step, interactions > 0 ? RESUME_AFTER_MS : 1200);
+    return () => window.clearTimeout(timer);
+  }, [inView, dragging, interactions]);
 
   const snap = (v: number) => {
-    setTouched(true);
+    markInteraction();
     setPos(v);
   };
 
@@ -50,7 +71,7 @@ export function BeforeAfterSlider({ before, after, beforeLabel, afterLabel, syst
           src={before}
           alt={`${systemName} — ${beforeLabel}`}
           draggable={false}
-          className={`absolute inset-0 h-full w-full object-cover ${dragging ? '' : 'transition-[clip-path] duration-700 ease-out'}`}
+          className={`absolute inset-0 h-full w-full object-cover ${dragging ? '' : auto ? 'transition-[clip-path] duration-[2000ms] ease-in-out' : 'transition-[clip-path] duration-700 ease-out'}`}
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
         />
 
@@ -75,7 +96,7 @@ export function BeforeAfterSlider({ before, after, beforeLabel, afterLabel, syst
 
         {/* divisor + alça */}
         <div
-          className={`pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow-[0_0_14px_rgba(255,255,255,0.8)] ${dragging ? '' : 'transition-[left] duration-700 ease-out'}`}
+          className={`pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow-[0_0_14px_rgba(255,255,255,0.8)] ${dragging ? '' : auto ? 'transition-[left] duration-[2000ms] ease-in-out' : 'transition-[left] duration-700 ease-out'}`}
           style={{ left: `${pos}%` }}
           aria-hidden="true"
         >
@@ -93,14 +114,17 @@ export function BeforeAfterSlider({ before, after, beforeLabel, afterLabel, syst
           value={pos}
           aria-label="Comparar antes e depois: arraste para revelar"
           onChange={(e) => {
-            setTouched(true);
+            markInteraction();
             setPos(Number(e.target.value));
           }}
           onPointerDown={() => {
-            setTouched(true);
+            markInteraction();
             setDragging(true);
           }}
-          onPointerUp={() => setDragging(false)}
+          onPointerUp={() => {
+            setDragging(false);
+            setInteractions((n) => n + 1);
+          }}
           onPointerCancel={() => setDragging(false)}
           onBlur={() => setDragging(false)}
           className="ba-range absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
