@@ -15,7 +15,6 @@ export const PROFILE = {
   linkedin: 'https://linkedin.com/in/valdemir-nunes-2b35a01a3',
   github: 'https://github.com/ValdemirnN',
   photoHero: '/assets/foto-hero.jpg',
-  photoAbout: '/assets/foto-sobre.jpg',
 };
 
 /** Mensagem que já vai pronta quando o visitante clica em qualquer botão de WhatsApp */
@@ -88,7 +87,6 @@ export const ABOUT = {
   ],
   facts: [
     { label: 'Formação', value: 'Bacharelado em Sistemas de Informação, UFERSA – Angicos/RN (concluído em 19/12/2024)' },
-    { label: 'Certificação', value: 'Dart com Flutter, Academia do Flutter (em andamento)' },
     { label: 'Atualmente', value: 'Auxiliar Técnico na Consolis – Soluções Inteligentes' },
     { label: 'Localização', value: 'Assu/RN, atendendo clientes remotamente' },
   ],
