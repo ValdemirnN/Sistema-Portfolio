@@ -1,7 +1,7 @@
 import { CheckCheck, Expand, Heart, RotateCcw } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { Testimonial } from '../data/profile';
-import { prefersReducedMotion, useInView } from './useReveal';
+import { prefersReducedMotion, useInViewLive } from './useReveal';
 
 interface Props {
   testimonial: Testimonial;
@@ -19,6 +19,9 @@ interface Msg {
   highlight?: boolean;
 }
 
+/** Com a conversa completa na tela, quanto tempo ela fica parada antes de recomeçar do zero. */
+const LOOP_HOLD_MS = 9000;
+
 /** Conversa real do WhatsApp "recortada" em balões, que se reproduz quando aparece na tela. */
 export function ChatReplay({ testimonial: t, before, after, onOpenPhoto, onOpenPrints }: Props) {
   const messages: Msg[] = [
@@ -27,7 +30,7 @@ export function ChatReplay({ testimonial: t, before, after, onOpenPhoto, onOpenP
     { id: 'm3', time: '09:33', text: t.quote, highlight: true },
   ];
 
-  const [rootRef, inView] = useInView<HTMLDivElement>(0.35);
+  const [rootRef, inView] = useInViewLive<HTMLDivElement>(0.35);
   const [shown, setShown] = useState(0);
   const [typing, setTyping] = useState(false);
   const [runId, setRunId] = useState(0);
@@ -42,6 +45,7 @@ export function ChatReplay({ testimonial: t, before, after, onOpenPhoto, onOpenP
       return;
     }
     setShown(0);
+    setTyping(false);
     const timers: number[] = [];
     const typingFor = [700, 1500, 1700];
     let at = 0;
@@ -59,6 +63,20 @@ export function ChatReplay({ testimonial: t, before, after, onOpenPhoto, onOpenP
     return () => timers.forEach(window.clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, runId]);
+
+  // loop: com a conversa completa, espera LOOP_HOLD_MS e recomeça do zero.
+  // Pausa fora da tela; reagir com o coração reinicia a espera para não cortar a interação.
+  useEffect(() => {
+    if (!inView || prefersReducedMotion()) return;
+    if (shown < messages.length || typing) return;
+    const timer = window.setTimeout(() => {
+      setLiked(false);
+      setShown(0);
+      setRunId((n) => n + 1);
+    }, LOOP_HOLD_MS);
+    return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView, shown, typing, liked, runId]);
 
   // mantém a última mensagem visível dentro da janela do chat (sem rolar a página)
   useEffect(() => {

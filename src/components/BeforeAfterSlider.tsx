@@ -1,6 +1,6 @@
 import { ArrowLeftRight, Expand } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { prefersReducedMotion, useInView } from './useReveal';
+import { prefersReducedMotion, useInViewLive } from './useReveal';
 
 interface Props {
   before: string;
@@ -23,7 +23,7 @@ const AUTO_AFTER = 16;
 
 /** Comparador arrastável: a foto "Antes" é revelada sobre a "Depois". */
 export function BeforeAfterSlider({ before, after, beforeLabel, afterLabel, systemName, onExpand }: Props) {
-  const [ref, inView] = useInView<HTMLDivElement>(0.4);
+  const [ref, inView] = useInViewLive<HTMLDivElement>(0.4);
   const [pos, setPos] = useState(50); // % da largura mostrando "Antes"
   const [dragging, setDragging] = useState(false);
   const [touched, setTouched] = useState(false);
