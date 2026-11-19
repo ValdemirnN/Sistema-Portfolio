@@ -123,3 +123,42 @@
 .animate-shot-fade {
   animation: shot-fade 0.5s ease;
 }
+
+
+/* ===== Depoimentos interativos ===== */
+@keyframes bubble-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-bubble-in {
+  animation: bubble-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+.typing-dot { animation: typing-dot 1.1s infinite; }
+
+@keyframes heart-pop {
+  0% { transform: scale(0.6); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+.animate-heart-pop { animation: heart-pop 0.4s ease; }
+
+@keyframes hint-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+.animate-hint-nudge { animation: hint-nudge 1.4s ease-in-out infinite; }
+
+/* comparador antes/depois: input range invisível por cima, para arrastar e usar o teclado */
+.ba-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  touch-action: pan-y;
+}
+.ba-range::-webkit-slider-thumb { -webkit-appearance: none; width: 48px; height: 100%; cursor: ew-resize; }
+.ba-range::-moz-range-thumb { width: 48px; height: 100%; border: 0; background: transparent; cursor: ew-resize; }
